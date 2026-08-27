@@ -1,0 +1,131 @@
+#floatReactMount {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  border: 0;
+  border-radius: 72px;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: blur(3px) saturate(165%);
+  -webkit-backdrop-filter: blur(3px) saturate(165%);
+}
+
+#floatReactMount::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  border-radius: 72px;
+  background:
+    radial-gradient(ellipse at 51% 50%, rgba(246,243,237,.70), transparent 61%),
+    linear-gradient(110deg, rgba(203,197,187,.42), rgba(235,231,223,.56) 49%, rgba(208,202,192,.43));
+  filter: saturate(100%);
+  opacity: 1;
+}
+
+#floatReactMount::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+  border-radius: 74px;
+  padding: 2px;
+  background: linear-gradient(110deg, rgba(177,169,157,.50), rgba(250,248,243,.93) 18%, rgba(255,255,255,.92) 55%, rgba(239,234,225,.88) 84%, rgba(178,170,158,.50));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+#floatReactMount > *,
+.liquid-float-surface,
+.liquid-float-fill {
+  width: 100%;
+  height: 100%;
+}
+.liquid-float-surface { position: relative; z-index: 1; }
+
+/* liquid-glass-react 的内部类名来自 Tailwind；本项目不用 Tailwind，
+   因此在悬浮窗作用域补齐其定位规则，让真实折射层铺满整个胶囊。 */
+#floatReactMount .relative { position: relative; width: 100%; height: 100%; }
+#floatReactMount .absolute { position: absolute; inset: 0; }
+#floatReactMount .glass {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  border: 0 !important;
+  background:
+    linear-gradient(112deg, rgba(255,255,255,.22), rgba(255,255,255,.46) 47%, rgba(246,230,206,.19)) !important;
+  box-shadow:
+    inset 0 2px 4px rgba(255,255,255,.98),
+    inset 12px 0 17px rgba(130,139,138,.16),
+    inset -13px 0 19px rgba(162,157,149,.14),
+    inset 0 -5px 12px rgba(73,78,75,.20) !important;
+}
+
+.liquid-float-fill {
+  border-radius: 72px;
+  background:
+    radial-gradient(ellipse at 11% 75%, rgba(153,160,158,.11), transparent 36%),
+    radial-gradient(ellipse at 91% 27%, rgba(183,179,171,.10), transparent 38%),
+    linear-gradient(110deg, rgba(255,255,255,.53), rgba(255,255,255,.14) 52%, rgba(243,241,235,.27));
+}
+
+.float-widget {
+  background: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.float-widget::before,
+.float-widget::after { display: none; }
+
+.float-widget > :not(#floatReactMount) { position: relative; z-index: 1; }
+
+.float-widget {
+  width: 155px !important;
+  height: 60px !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  padding: 8px 6px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-family: "Bodoni MT", Didot, "Baskerville", "Times New Roman", serif !important;
+  font-size: 36px !important;
+  font-weight: 400 !important;
+  letter-spacing: .01em !important;
+  color: #171716 !important;
+  text-shadow: 0 3px 10px rgba(0,0,0,.28) !important;
+}
+
+#floatDigits { position: absolute !important; inset: 0 !important; width: auto !important; margin: 0 !important; display: flex !important; align-items: center !important; justify-content: center !important; flex-wrap: nowrap !important; transform: translateY(-1px) !important; white-space: nowrap; text-align: center !important; line-height: 1 !important; }
+#floatDigits .time-part { font-style: normal; }
+#floatDigits .time-hour { color: #242525; }
+#floatDigits .time-minute { color: #232323; }
+#floatDigits .time-second { color: #242322; }
+
+.float-pin { display: none !important; }
+
+/* 独立桌面悬浮窗：主体仍复用原有液态玻璃和四键，只由系统窗口负责跨屏移动。 */
+html.desktop-floating,
+html.desktop-floating body { width:100%; height:100%; margin:0; overflow:hidden; background:transparent !important; }
+/* 主窗口里的隐藏悬浮组件绝不参与布局；独立透明悬浮窗会在脚本就绪后显式显示。 */
+html:not(.desktop-floating) #floatWidget[hidden] { display:none !important; }
+html.desktop-floating .app-shell { display:none !important; }
+html.desktop-floating .float-widget {
+  position:fixed !important;
+  left:72px !important;
+  top:70px !important;
+  right:auto !important;
+  cursor:default !important;
+  /* 手动拖动由 app.js 与主进程协作完成，保留右键、双击和短按主体的事件。 */
+  -webkit-app-region:no-drag;
+}
+html.desktop-floating .float-widget button,
+html.desktop-floating .float-widget input { -webkit-app-region:no-drag; }
+html.desktop-floating #floatMenu:not([hidden]) { display:block !important; }

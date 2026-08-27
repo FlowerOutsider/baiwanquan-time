@@ -1,0 +1,66 @@
+{
+  "name": "baiwanquan",
+  "version": "1.0.0",
+  "description": "本地优先的专注计时与项目管理工具",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "api": "node --experimental-sqlite server/app.js",
+    "build": "vite build",
+    "preview": "vite preview",
+    "start": "node --experimental-sqlite server/app.js",
+    "test": "node --experimental-sqlite --test",
+    "desktop": "electron desktop/main.js",
+    "desktop:dev": "desktop\\dev.cmd",
+    "build:desktop": "vite build && electron-builder --win nsis"
+  },
+  "main": "desktop/main.js",
+  "build": {
+    "appId": "com.baiwanquan.timer",
+    "productName": "百万拳时间",
+    "electronDist": "node_modules/electron/dist",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**",
+      "server/**",
+      "desktop/**",
+      "assets/**",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "assets/app-icon.ico",
+        "to": "assets/app-icon.ico"
+      }
+    ],
+    "asar": true,
+    "win": {
+      "target": "nsis",
+      "executableName": "百万拳时间",
+      "icon": "assets/app-icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "installerIcon": "assets/app-icon.ico",
+      "uninstallerIcon": "assets/app-icon.ico",
+      "allowElevation": false,
+      "packElevateHelper": false
+    }
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "liquid-glass-react": "^1.1.1",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "vite": "^5.4.21"
+  },
+  "devDependencies": {
+    "electron": "38.0.0",
+    "electron-builder": "^26.15.3"
+  }
+}

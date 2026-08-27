@@ -1,0 +1,1259 @@
+.round-action {
+  display: grid;
+  place-items: center;
+  font-size: 0;
+}
+
+.control-icon {
+  width: 25px;
+  height: 25px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.65;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.pause-icon { stroke-width: 2.5; }
+.scissors-icon { width: 27px; height: 27px; stroke-width: 1.55; }
+
+.has-raster {
+  width: 86px !important;
+  height: 86px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.has-raster img {
+  display: block;
+  width: 86px;
+  height: 86px;
+  pointer-events: none;
+}
+
+/* The reference uses a very specific serif numeral drawing.  This prototype
+   deliberately renders the supplied reference glyphs rather than substituting
+   a similar installed font. */
+.timer-digits,
+.focus-digits {
+  display: grid !important;
+  place-items: center;
+  font-family: "Bodoni MT", Didot, "Baskerville", "Times New Roman", serif !important;
+  font-size: clamp(120px, 12vw, 205px) !important;
+  line-height: 1 !important;
+  letter-spacing: .01em;
+  color: #211f1c;
+  text-shadow: 0 4px 12px rgba(53,45,37,.16) !important;
+}
+
+/* 数字是页面背景上的独立文字层；不使用图片或白色底板。 */
+.timer-digits:not([hidden]),
+.focus-digits:not([hidden]) {
+  display: grid !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  color: #211f1c !important;
+  background: transparent !important;
+  z-index: 2 !important;
+  white-space: nowrap !important;
+}
+
+.timer-digits img,
+.focus-digits img {
+  display: block;
+  width: min(700px, 76vw);
+  height: auto;
+  mix-blend-mode: multiply;
+}
+
+.focus-digits img {
+  width: min(700px, 80vw);
+}
+.timer-digits img, .focus-digits img { display:none !important; }
+.focus-overlay .focus-digits { font-size: clamp(170px, 14vw, 270px) !important; }
+
+.focus-trim-stack { position: relative; }
+.focus-trim-editor {
+  position: absolute;
+  bottom: 78px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px;
+  color: #615a50;
+  background: rgba(250, 247, 240, .9);
+  border: 1px solid rgba(126, 116, 102, .18);
+  border-radius: 10px;
+  box-shadow: 0 10px 24px rgba(67, 58, 47, .08);
+}
+.focus-trim-editor input {
+  width: 42px;
+  padding: 5px 3px;
+  border: 1px solid #ded9cf;
+  border-radius: 5px;
+  background: #faf8f3;
+  color: #292724;
+  text-align: center;
+}
+.float-action { width: 48px !important; height: 48px !important; padding: 0 !important; border: 0 !important; background: transparent !important; }
+.float-action img { display: block; width: 48px; height: 48px; }
+
+.float-widget.is-paused { opacity: .82; }
+.float-editor { display: flex; align-items: center; gap: 7px; }
+.focus-trim-editor[hidden],
+.float-editor[hidden],
+.focus-overlay[hidden],
+.float-widget[hidden],
+.float-menu[hidden] { display: none !important; }
+.float-editor input { width: 58px; border: 0; border-bottom: 1px solid rgba(35, 32, 28, .25); background: transparent; padding: 0 2px 4px; color: #1e1d1b; font: inherit; font-size: 46px; text-align: center; outline: 0; }
+.float-editor b { font-size: 45px; font-weight: 400; }
+
+/* 项目目录只属于“项目”栏目，计时、今日和时间线保持一列的快速入口。 */
+#appShell:not(.projects-active) { grid-template-columns: 82px 1fr; }
+#appShell:not(.projects-active) #projectRail { display: none; }
+
+.timer-header { position: relative; }
+.task-menu, .mode-menu {
+  position: absolute;
+  z-index: 6;
+  display: grid;
+  min-width: 235px;
+  padding: 7px;
+  background: rgba(250, 248, 243, .98);
+  border: 1px solid #ded9cf;
+  border-radius: 10px;
+  box-shadow: 0 14px 30px rgba(67, 58, 47, .10);
+}
+.task-menu { left: 0; top: 42px; }
+.mode-menu { right: 108px; top: 42px; min-width: 115px; }
+.task-menu button, .mode-menu button { border: 0; padding: 10px 12px; background: transparent; color: #514c46; text-align: left; font: inherit; border-radius: 6px; }
+.task-menu button:hover, .mode-menu button:hover { background: #eee9df; }
+.task-menu[hidden], .mode-menu[hidden] { display: none !important; }
+.new-project-menu { position:absolute; z-index:7; top:42px; left:0; display:grid; gap:10px; min-width:250px; padding:13px; border:1px solid #ded9cf; border-radius:10px; background:#faf8f3; box-shadow:0 14px 30px rgba(67,58,47,.10); color:#514c46; }
+.new-project-menu label { display:grid; gap:7px; font-size:13px; }
+.new-project-menu select,.new-project-menu input,.new-project-menu button { border:1px solid #ded9cf; border-radius:6px; background:#fffdf8; padding:7px 9px; color:#514c46; font:inherit; }
+.new-project-menu input { width:100%; outline:0; }
+.new-project-menu input:focus { border-color:#aa9b88; box-shadow:0 0 0 3px rgba(170,155,136,.12); }
+.new-project-menu button { cursor:pointer; }
+.new-project-menu[hidden] { display:none !important; }
+
+.project-overview { grid-template-columns: minmax(320px, .84fr) 1.16fr; gap: 80px; padding: 46px 0 32px; }
+.project-overview strong { font-size: clamp(50px, 5.2vw, 78px); line-height: 1.05; }
+.project-description { display: grid; align-content: center; }
+.project-description p { margin: 8px 0 0; }
+.project-panel .project-meta { display: flex; gap: 20px; padding: 14px 0; }
+.project-panel .project-meta span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* 全局统计：三个独立页面，各自拥有日期与项目筛选。 */
+.global-stats-view { overflow-y:auto; padding-bottom:72px; }
+.global-stats-heading { display:block; }
+.stats-tabs { display:flex; align-items:flex-end; gap:34px; margin-top:20px; border-bottom:1px solid var(--line); }
+.stats-tabs button { appearance:none; border:0; border-bottom:3px solid transparent; padding:0 0 12px; background:transparent; color:#746c62; font:inherit; cursor:pointer; }
+.stats-tabs button.active { color:#292621; border-bottom-color:#292621; font-weight:600; }
+.global-stats-panel { display:none; }
+.global-stats-panel.active { display:block; }
+.stats-filter-row { display:grid; grid-template-columns:minmax(420px,1fr) auto; gap:38px; align-items:start; }
+.stats-filter-row .range-filter { min-width:0; }
+.global-stats-filters { display:flex; justify-content:flex-end; margin-top:22px; }
+.global-stats-filters label { display:flex; align-items:center; gap:10px; color:#655e55; }
+.global-stats-filters select { min-width:150px; border:0; border-bottom:1px solid var(--line); background:transparent; color:#514c46; font:inherit; padding:8px 2px; outline:0; }
+.global-stats-panel > .range-filter { margin-top:-38px; }
+.global-stats-module { max-width:1040px; margin-top:40px; }
+.global-stats-module h2 { margin:0 0 18px; font-size:15px; font-weight:500; color:#5d574f; }
+.global-stats-module .global-timeline { max-width:none; margin-top:0; }
+.global-stats-module .global-timeline > div[hidden] { display:none; }
+.proportional-bars { position:relative; height:250px; max-width:1040px; border-bottom:1px solid var(--line); }
+.proportional-bars i { position:absolute; left:var(--at); bottom:0; display:block; width:20px; height:var(--h); transform:translateX(-50%); border-radius:2px 2px 0 0; background:#a3998b; cursor:help; }
+.proportional-bars i[hidden] { display:none; }
+.proportional-axis { position:relative; max-width:1040px; height:34px; color:#81796e; font-size:12px; }
+.proportional-axis span { position:absolute; top:9px; left:var(--at); transform:translateX(-50%); white-space:nowrap; }
+.proportional-axis span:last-child { transform:translateX(-100%); }
+.heatmap-header { display:flex; justify-content:space-between; max-width:610px; margin-bottom:12px; color:#81796e; font-size:12px; }
+.global-heatmap { grid-template-columns:repeat(28,16px); }
+.global-heatmap i { cursor:help !important; }
+.global-heatmap i[hidden] { visibility:hidden; }
+.heatmap-note { margin:16px 0 0; color:#81796e; font-size:12px; }
+
+/* 今日时间段：整条时间轴固定映射 00:00–24:00。 */
+.day-line { gap:12px; }
+.today-track { position:relative; flex:1; height:44px; border-top:2px solid #d4cec3; }
+.today-track .session { position:absolute; left:var(--start); right:calc(100% - var(--end)); top:-9px; width:auto; min-width:3px; height:18px; border:0; padding:0 5px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; text-align:left; color:#4f4942; font:inherit; font-size:13px; line-height:18px; cursor:pointer; }
+.today-track .session.selected { outline:2px solid rgba(103,93,80,.42); outline-offset:2px; opacity:1; }
+.today-track .session.micro { padding:0; }
+.session-list { max-width:1125px; }
+.session-row { width:100%; display:grid; grid-template-columns:190px minmax(190px,1fr) minmax(170px,1fr) 112px; align-items:center; gap:18px; border-bottom:1px solid var(--line); padding:16px 0; color:var(--ink); cursor:pointer; }
+.session-row.selected { background:linear-gradient(90deg,rgba(238,233,223,.64),transparent 72%); }
+.session-row .session-path,.session-row .session-note { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:#686259; outline:0; }
+.session-row .today-project-picker { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; border:0; border-bottom:1px solid transparent; padding:2px 0; background:transparent; color:#686259; text-align:left; font:inherit; cursor:pointer; }
+.session-row .today-project-picker:hover { border-bottom-color:#b9b0a3; }
+.session-row .session-note { color:#8a8276; }
+.session-row .session-path:focus,.session-row .session-note:focus { overflow:visible; white-space:normal; border-bottom:1px solid #9d9282; color:#403b35; }
+.session-row em { text-align:right; color:#787067; font-style:normal; }
+
+/* 时间段详情：路径、开始、结束、时长统一使用相同的图标列与文字列。 */
+.segment-detail dl { grid-template-columns:150px minmax(0,1fr); align-items:center; }
+.segment-detail dt { display:flex; align-items:center; min-height:26px; white-space:pre; }
+.segment-detail dd { min-width:0; margin:0; }
+.segment-detail .path-field { display:flex; min-width:0; align-items:center; }
+.segment-detail .segment-project-picker { min-width:0; max-width:100%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.segment-detail .segment-project-picker::before { content:none; }
+.segment-detail.is-empty .time-of-day { opacity:.35; }
+.segment-detail.is-empty h2 { color:#8a8276; }
+.time-of-day div i { top:-2px; height:0; border-top:4px solid #84796a; }
+.timer-center { position:relative; }
+#timerView { position:relative; }
+.timer-note-trigger { position:absolute; right:48px; bottom:42px; border:0; background:transparent; color:#756e64; font:14px/1 inherit; cursor:pointer; padding:8px 4px; }
+.timer-note-panel { position:absolute; z-index:30; right:48px; bottom:76px; width:300px; padding:13px 15px; border:1px solid #ded9cf; border-radius:12px; background:#fffdf9; box-shadow:0 16px 34px rgba(72,61,48,.14); }
+.timer-note-panel[hidden] { display:none !important; }
+.timer-note-panel label { display:grid; gap:8px; color:#756e64; font-size:13px; }
+.timer-note-panel textarea { min-height:105px; resize:vertical; border:0; outline:0; background:transparent; color:#504a43; font:14px/1.65 inherit; }
+.archive-toggle { margin-top:auto; padding-top:18px; color:#6d675e; display:flex; align-items:center; gap:8px; font-size:14px; }
+.archive-toggle input { accent-color:#766b5c; }
+.tree-project-row[data-archived="true"] .tree-row { color:#938a7d; }
+.tree-project-row[data-deleted="true"] { display:none !important; }
+
+.date-inputs { display: flex; align-items: center; gap: 14px; }
+.date-inputs input { width: 135px; border: 0; background: transparent; color: #514c46; font: inherit; outline: 0; }
+.range-filter { --start: 0%; --end: 100%; }
+.range-track b { left: var(--start) !important; right: calc(100% - var(--end)) !important; }
+.range-track i.start-handle { left: calc(var(--start) - 7px) !important; }
+.range-track i.end-handle { right: auto !important; left: calc(var(--end) - 7px) !important; }
+.segment-layout { grid-template-columns: 420px 1fr; }
+.selector-columns { display: grid; grid-template-columns: 1fr 1fr; border-right: 1px solid var(--line); }
+.date-sessions, .day-sessions { display: flex; flex-direction: column; gap: 9px; padding: 22px 12px; }
+.date-sessions, .day-sessions { max-height: 340px; overflow-y: auto; scrollbar-width: thin; }
+.date-sessions { border-right: 1px solid var(--line); }
+.day-sessions { border-right: 0; }
+.date-sessions button, .day-sessions button { border: 0; background: transparent; padding: 10px 12px; text-align: left; color: #605950; border-radius: 4px; font: inherit; cursor: pointer; }
+.date-sessions button.selected, .day-sessions button.selected { background: #e8e2d8; color: #282522; font-weight: 600; }
+.time-of-day div i { position: absolute; left: var(--start); right: calc(100% - var(--end)); width: auto; margin: 0; }
+.time-of-day div b:first-of-type { left: var(--start); }
+.time-of-day div b:last-of-type { left: var(--end); }
+
+.tree-project-row { display: flex; align-items: center; }
+.tree-project-row[hidden] { display: none !important; }
+.tree-project-row .tree-row { flex: 1; }
+.tree-add-child { visibility: hidden; width: 28px; height: 28px; border: 0; background: transparent; color: #514c46; font-size: 22px; cursor: pointer; }
+.tree-project-row:hover .tree-add-child { visibility: visible; }
+.tree-options { margin-top: auto; display: grid; gap: 11px; }
+.tree-options .completed-toggle { margin: 0; }
+.segment-node { color: #7b746a !important; font-size: 13px !important; cursor: grab !important; }
+.segment-node:active { cursor: grabbing !important; }
+.tree-row.pending { margin-top: 14px; color: #625b52; }
+.project-tree { position: relative; }
+.project-tree > .tree-add { position: absolute; top: -50px; right: 0; margin: 0; padding: 0; }
+.tree-project-row[data-depth="2"] { margin-left: 16px; }
+.tree-project-row[data-depth="3"] { margin-left: 30px; }
+.tree-project-row[data-depth="4"] { margin-left: 44px; }
+.tree-project-row[data-depth="5"] { margin-left: 58px; }
+.tree-row.pending { margin-top: 42px; }
+
+.unassigned-detail { position: relative; padding: 30px 10px 0; }
+.unassigned-detail h2 { margin: 36px 0 20px; font-size: 46px; }
+.unassigned-detail dl { display: grid; grid-template-columns: 180px 1fr; gap: 13px; margin-top: 22px; color: #5d574f; }
+.unassigned-detail dt { color: #756e64; }
+.unassigned-detail hr { border: 0; border-top: 1px solid #ded9cf; margin: 24px 0; }
+.project-header[hidden] { display: none !important; }
+.segment-project-picker, .task-picker { border:0 !important; background:transparent; padding:6px 2px; color:#5d574f; font:inherit; cursor:pointer; text-decoration:none; box-shadow:none !important; }
+.session-project-menu { position: absolute; top: 145px; left: 0; z-index: 5; display: grid; min-width: 320px; padding: 7px; border: 1px solid #ded9cf; border-radius: 9px; background: #faf8f3; box-shadow: 0 10px 22px rgba(67,58,47,.1); }
+.session-project-menu button { border: 0; background: transparent; padding: 9px; color: #514c46; text-align: left; font: inherit; cursor: pointer; }
+.session-project-menu button:hover { background: #eee9df; }
+.session-project-menu[hidden], .unassigned-detail[hidden] { display: none !important; }
+.segment-detail { position: relative; }
+.segment-detail .segment-project-picker { margin: 0 0 12px; }
+.segment-detail .segment-project-picker::before { content:none !important; display:none !important; }
+.segment-detail .session-project-menu { top: 144px; left: 35px; }
+
+.range-boundaries { display: flex; justify-content: space-between; margin-top: 5px; color: #938a7d; font-size: 12px; }
+.range-track .start-handle, .range-track .end-handle { cursor: ew-resize; touch-action: none; width:26px; height:26px; top:4px; border:0; background:transparent; z-index:3; }
+.range-track .start-handle::after, .range-track .end-handle::after { content:""; position:absolute; width:12px; height:12px; left:7px; top:7px; border:2px solid #8e8374; border-radius:50%; background:var(--paper); }
+.range-track i.start-handle { left:calc(var(--start) - 13px) !important; }
+.range-track i.end-handle { left:calc(var(--end) - 13px) !important; }
+.interactive-range.is-collapsed .range-track i.start-handle { transform: translateX(-9px); }
+.interactive-range.is-collapsed .range-track i.end-handle { transform: translateX(9px); }
+.chart-axis { display: flex; justify-content: space-between; padding: 8px 27px 0; color: #898277; font-size: 12px; }
+.stats-bars i, .heatmap i, .global-bar { cursor: default; }
+.heatmap i { position: relative; }
+
+/* 悬浮态：暖色内核叠加折射、高光与模糊，形成液态玻璃。 */
+.float-widget { isolation: isolate; --gx:20%; --gy:8%; display: grid; place-items: center; min-width: 440px; min-height: 142px; padding: 22px 58px; overflow: visible; border: 1px solid rgba(255,255,255,.88); border-radius: 72px; background: radial-gradient(ellipse at var(--gx) var(--gy),rgba(255,255,255,.92),transparent 42%),radial-gradient(ellipse at 85% 105%,rgba(255,225,206,.38),transparent 58%),linear-gradient(118deg,rgba(255,255,255,.66),rgba(239,231,218,.48)); box-shadow: 0 22px 42px rgba(89,73,56,.14),inset 0 2px 2px rgba(255,255,255,.96),inset 0 -2px 4px rgba(153,132,108,.10); backdrop-filter: blur(24px) saturate(140%) contrast(104%); -webkit-backdrop-filter: blur(24px) saturate(140%) contrast(104%); font-family:"Bahnschrift","Segoe UI Variable Display",Arial,sans-serif; font-size:64px; font-weight:650; letter-spacing:.035em; line-height:1; color:#3b3936; text-align:center; text-shadow:0 1px 0 rgba(255,255,255,.82),0 3px 12px rgba(74,64,54,.15); }
+.float-widget::before,.float-widget::after { content:""; position:absolute; pointer-events:none; border-radius:inherit; z-index:-1; }
+.float-widget::before { inset:3px; border:1px solid rgba(255,255,255,.66); background:linear-gradient(102deg,rgba(255,255,255,.42),transparent 32%,rgba(255,236,225,.24)); }
+.float-widget::after { inset:-3px; border:1px solid rgba(255,255,255,.38); filter:blur(2px); }
+.float-widget > span { display:block; width:100%; transform:translateY(-1px); }
+.float-pin { position:absolute; top:13px; right:17px; z-index:2; width:18px; height:18px; padding:0; border:0; background:transparent; color:#756e64; font-size:15px; line-height:18px; opacity:.28; cursor:pointer; }
+.float-pin.is-pinned { opacity:.75; }
+
+/* 截取时才显示编辑框；位置跟随对应的剪刀。 */
+.trim-editor[hidden] { display:none !important; }
+.trim-editor { left:50% !important; width:auto !important; transform:translateX(-50%); white-space:nowrap; }
+.trim-editor:not([hidden])::after { display:none !important; }
+.float-editor { flex-direction:column; gap:8px; }
+.float-editor small { font:500 22px/1 "Bahnschrift",sans-serif; opacity:.62; letter-spacing:.04em; }
+.float-editor > div { display:flex; align-items:center; gap:7px; }
+
+/* 专注态：数字更大，操作下沉并弱化。 */
+.timer-actions { display:grid !important; grid-template-columns:repeat(4, 72px); column-gap:64px; width:480px; justify-content:center; gap:0 !important; transform: translateY(42px); }
+.timer-actions .has-raster, .timer-actions .has-raster img { width: 72px !important; height: 72px !important; }
+.timer-actions .trim-stack { width:72px; }
+.timer-actions #startButton img,
+.focus-controls #focusStartButton img {
+  /* 原暂停素材的圆心比其余三张原图向右偏约 17px（72px 显示时为 14px）。 */
+  position: relative;
+  left: -14px;
+}
+/* 播放态伪元素必须以按钮本身为定位容器；否则会相对外层布局定位，
+   造成播放与暂停切换时出现上下跳动。 */
+.timer-actions #startButton,
+.focus-controls #focusStartButton { position:absolute !important; }
+.timer-actions .trim-editor { bottom: 92px !important; width: 224px !important; min-height: 54px; padding: 11px 13px; border-color: rgba(150,139,121,.30); background: rgba(247,244,238,.97); box-shadow: 0 12px 28px rgba(70,60,48,.10); }
+.timer-actions .trim-editor input { width: 54px; padding: 7px 4px; border-color: rgba(150,139,121,.26); background: rgba(255,255,255,.38); }
+#trimButton, #focusTrimButton, #floatTrimButton { position:relative; }
+#trimButton::before, #focusTrimButton::before, #floatTrimButton::before { content:none !important; }
+/* 已确认：主页和专注态的四个按钮直接使用原始图，不做裁剪、混色或图标替换。 */
+.timer-actions .has-raster img,
+.focus-controls .has-raster img { clip-path:none !important; mix-blend-mode:normal !important; }
+
+/* 只遮掉剪刀图标底部的虚线尾巴，圆形图标主体保持原图。 */
+#trimButton::after,
+#focusTrimButton::after {
+  content:"" !important;
+  position:absolute;
+  z-index:2;
+  left:0;
+  right:0;
+  bottom:0;
+  height:17px;
+  background:var(--paper);
+  pointer-events:none;
+}
+
+/* 悬浮态菜单可单独处理，不能影响已锁定的主页/专注态按钮。 */
+.float-menu .float-action img { clip-path:none !important; }
+#floatTrimButton img { display:block !important; clip-path:none !important; mix-blend-mode:normal !important; }
+.focus-overlay { gap:0; }
+.focus-overlay .focus-digits { position:absolute; left:50%; top:47%; transform:translate(-50%,-50%) !important; text-align:center !important; }
+.focus-overlay .focus-digits img { width:min(900px, 82vw) !important; }
+.focus-controls { position:absolute; left:50%; bottom:8vh; display:grid !important; grid-template-columns:repeat(4,72px); column-gap:64px; width:480px; transform:translateX(-50%); justify-content:center; gap:0 !important; opacity:.46; transition:opacity .35s ease; }
+.focus-controls.is-hidden { opacity:0; pointer-events:none; }
+.focus-controls .has-raster,.focus-controls .has-raster img { width:72px !important; height:72px !important; }
+.focus-controls .focus-trim-stack { width:72px; }
+.focus-trim-editor { bottom:112px !important; min-width:224px; min-height:54px; padding:11px 13px; border-color:rgba(150,139,121,.30); background:rgba(247,244,238,.97); }
+.focus-trim-editor input { width:54px; padding:7px 4px; }
+
+/* 主页与专注态使用同一套绝对坐标：按钮盒子的左边界为 0 / 136 / 272 / 408。
+   72px 按钮之间恒为 64px，480px 控制组整体的几何中心即页面中心。 */
+.timer-actions,
+.focus-controls {
+  display: block !important;
+  position: relative !important;
+  width: 480px !important;
+  height: 72px !important;
+  column-gap: 0 !important;
+}
+.timer-actions > *,
+.focus-controls > * {
+  position: absolute !important;
+  width: 72px !important;
+  height: 72px !important;
+  margin: 0 !important;
+}
+.timer-actions > :nth-child(1),
+.focus-controls > :nth-child(1) { left: 0 !important; }
+.timer-actions > :nth-child(2),
+.focus-controls > :nth-child(2) { left: 136px !important; }
+.timer-actions > :nth-child(3),
+.focus-controls > :nth-child(3) { left: 272px !important; }
+.timer-actions > :nth-child(4),
+.focus-controls > :nth-child(4) { left: 408px !important; }
+
+/* 专注态仍作为全屏覆盖层内的绝对定位控制组，只替换其内部四列的布局方式。 */
+.focus-controls {
+  position: absolute !important;
+  left: 50% !important;
+  bottom: 8vh !important;
+  transform: translateX(-50%) !important;
+}
+
+/* 悬浮窗右键菜单：四个控制沿胶囊右侧的外部弧线分布，互不覆盖。 */
+#floatMenu { position:absolute !important; left:0 !important; top:0 !important; right:auto !important; bottom:auto !important; width:300px !important; height:180px !important; display:block !important; pointer-events:none; }
+#floatMenu[hidden] { display:none !important; }
+.float-menu .float-action { position:absolute; display:grid; place-items:center; width:38px !important; height:38px !important; padding:0 !important; border-radius:50% !important; border:1px solid rgba(156,145,127,.25) !important; background:rgba(236,232,224,.78) !important; color:#625d56 !important; box-shadow:inset 0 1px 1px rgba(255,255,255,.9),0 3px 10px rgba(67,58,47,.08) !important; overflow:hidden; }
+.float-menu .float-action { pointer-events:auto; }
+.float-menu .float-action img { width:38px !important; height:38px !important; mix-blend-mode:normal; opacity:1; }
+#floatMenu #floatToggleButton { left:136px !important; top:-44px !important; }
+#floatMenu #floatSaveButton { left:175px !important; top:-14px !important; }
+#floatMenu #floatTrimButton { left:175px !important; top:36px !important; }
+#floatMenu #floatDiscardButton { left:136px !important; top:66px !important; }
+.float-menu .float-action.is-active,
+.float-menu .float-action:active { color:#302d28 !important; background:rgba(219,213,203,.90) !important; }
+.float-editor { position:absolute !important; inset:0 !important; z-index:3; display:flex !important; flex-direction:column; align-items:center; justify-content:center; gap:3px !important; color:#292724; }
+.float-editor small { display:none !important; }
+.float-editor > div { display:flex; align-items:center; justify-content:center; gap:3px !important; }
+.float-editor input { width:35px !important; padding:0 1px 2px !important; font:36px/1 "Bodoni MT", Didot, serif !important; border:0 !important; border-bottom:1px solid rgba(117,106,91,.38) !important; background:transparent !important; }
+.float-editor b { font:34px/1 "Bodoni MT", Didot, serif !important; }
+#floatDigits[hidden] { display:none !important; }
+
+/* 统一的层级项目选择：先展示顶层，右侧箭头只负责进入下一层。 */
+.path-chooser { position:fixed; z-index:80; min-width:278px; max-width:360px; padding:7px; border:1px solid #ded9cf; border-radius:12px; background:#fffdf9; box-shadow:0 16px 34px rgba(72,61,48,.14); }
+.path-chooser[hidden] { display:none !important; }
+.path-chooser-row { display:grid; grid-template-columns:minmax(0,1fr) 32px; align-items:center; padding-left:calc(var(--level) * 14px); }
+.path-chooser button { border:0; background:transparent; color:#514c46; font:14px/1.3 inherit; text-align:left; cursor:pointer; }
+.path-chooser .path-choice { padding:10px 9px; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; border-radius:7px; }
+.path-chooser .path-choice:hover,.path-chooser .path-new:hover,.path-chooser .path-drill:hover { background:#eee9df; }
+.path-chooser .path-drill { width:28px; height:28px; border-radius:50%; text-align:center; font-size:21px; line-height:1; }
+.path-chooser .path-new,.path-chooser .path-unassigned { display:block; width:100%; padding:10px 9px; border-radius:7px; }
+.new-project-parent-picker { display:block; width:100%; margin-top:7px; padding:10px 11px; border:1px solid #ded9cf; border-radius:8px; background:#fffdf9; color:#514c46; font:inherit; text-align:left; cursor:pointer; }
+.session-row .today-project-picker { border:0 !important; text-decoration:none !important; box-shadow:none !important; }
+.session-row .today-project-picker:hover { border:0 !important; }
+
+/* 贴边后仅保留一枚几乎透明的侧边标记；悬停不展开，点击才恢复胶囊。 */
+.float-widget.is-collapsed { display:block !important; min-width:0 !important; min-height:0 !important; width:26px !important; height:86px !important; padding:0 !important; overflow:hidden !important; opacity:.24; border:0 !important; box-shadow:none !important; background:rgba(79,69,59,.38) !important; backdrop-filter:blur(8px) !important; -webkit-backdrop-filter:blur(8px) !important; }
+.float-widget.is-collapsed.dock-right { border-radius:18px 0 0 18px !important; }
+.float-widget.is-collapsed.dock-left { border-radius:0 18px 18px 0 !important; }
+.float-widget.is-collapsed::before,.float-widget.is-collapsed::after { display:none !important; }
+.float-widget.is-collapsed > #floatDigits,.float-widget.is-collapsed > .float-editor,.float-widget.is-collapsed > .float-pin,.float-widget.is-collapsed > .float-menu { display:none !important; }
+.float-widget.is-collapsed::selection { background:transparent; }
+.float-widget.is-collapsed { color:transparent !important; }
+.float-widget.is-collapsed:has(#floatDigits)::after { content:"Ⅱ"; display:grid !important; place-items:center; position:absolute; inset:0; z-index:1 !important; color:rgba(255,255,255,.94); font:600 19px/1 Arial,sans-serif; }
+
+/* 本轮：备注入口与“今天”时间轴在同一视觉基线。 */
+.timer-note-trigger {
+  right:48px !important;
+  bottom:42px !important;
+  min-width:48px;
+  height:28px;
+  padding:0 10px !important;
+  border:1px solid #cfc7bb !important;
+  border-radius:4px;
+  /* 关闭时仅保留描边与文字，不产生与计时页不一致的白色底块。 */
+  background:transparent !important;
+  color:#6a635a !important;
+  font-size:13px !important;
+  line-height:26px !important;
+  text-align:center;
+}
+.timer-note-trigger:hover { background:rgba(238,233,223,.38) !important; }
+.timer-note-panel { bottom:80px !important; }
+
+/* 今天：轨道置于自身带状区域的正中央，两个时间标签固定在两端。 */
+#todayView .day-line {
+  min-height:108px;
+  display:grid;
+  grid-template-columns:46px minmax(0,1fr) 46px;
+  align-items:center;
+  gap:12px;
+  padding:0 !important;
+}
+#todayView .today-track { height:0 !important; align-self:center; }
+#todayView .day-label { align-self:center; white-space:nowrap; }
+
+/* 项目时间段详情与“今天”时间轴采用同一条基线与端点规则。 */
+.segment-detail .time-of-day,
+.unassigned-detail .time-of-day {
+  min-height:62px;
+  display:grid;
+  grid-template-columns:42px minmax(0,1fr) 42px;
+  align-items:center;
+  gap:12px;
+  margin:0;
+}
+.segment-detail .time-of-day > span,
+.unassigned-detail .time-of-day > span { white-space:nowrap; align-self:center; }
+.segment-detail .time-of-day > div,
+.unassigned-detail .time-of-day > div { align-self:center; }
+
+/* 统计项目筛选紧随日期筛选，保留适当间距，而不是贴到页面最右侧。 */
+.stats-filter-row { position:relative !important; display:block !important; }
+.stats-filter-row .range-filter { width:100%; }
+.global-stats-filters {
+  position:absolute;
+  top:21px;
+  left:430px;
+  margin:0 !important;
+  justify-content:flex-start !important;
+}
+
+/* 项目目录：边界可以拖动，左上角按钮可一键展开/关闭。 */
+#appShell { position:relative; width:100%; max-width:100vw; --project-rail-width:298px; grid-template-columns:82px var(--project-rail-width) minmax(0,1fr) !important; }
+#appShell:not(.projects-active) {
+  /* 非项目页没有项目目录：必须同时移除目录的显示和栅格占位。
+     此处保留 !important，覆盖本文件中项目页的三列布局。 */
+  --project-rail-width:0px;
+  grid-template-columns:82px minmax(0,1fr) !important;
+}
+#appShell.project-rail-closed { --project-rail-width:0px; }
+#appShell.project-rail-closed #projectRail { padding-left:0 !important; padding-right:0 !important; border:0 !important; }
+#projectRail { min-width:0 !important; overflow:hidden; }
+#projectRailResizer {
+  position:absolute;
+  z-index:55;
+  top:62px;
+  bottom:0;
+  left:calc(82px + var(--project-rail-width) - 4px);
+  width:8px;
+  cursor:col-resize;
+  touch-action:none;
+}
+#projectRailResizer::after { content:""; position:absolute; top:0; bottom:0; left:3px; width:1px; background:transparent; }
+#projectRailResizer:hover::after { background:rgba(125,114,99,.38); }
+#projectRailToggle {
+  position:absolute;
+  z-index:56;
+  top:72px;
+  left:calc(82px + var(--project-rail-width) + 9px);
+  width:30px;
+  height:30px;
+  padding:0;
+  border:0;
+  background:transparent;
+  color:#625b52;
+  font:26px/1 Georgia,serif;
+  cursor:pointer;
+}
+#appShell.project-rail-closed #projectRailToggle { left:91px; }
+#appShell:not(.projects-active) #projectRailResizer,
+#appShell:not(.projects-active) #projectRailToggle { display:none; }
+
+/* 本轮：项目目录全展开与今日时间轴的精确表现。 */
+#appShell.project-rail-full {
+  grid-template-columns:82px minmax(0,1fr) !important;
+}
+#appShell.project-rail-full #projectRail {
+  grid-column:2 / -1;
+  grid-row:1 / -1;
+  z-index:58;
+  background:#f8f5ef;
+  padding-right:44px !important;
+}
+#appShell.project-rail-full .workspace { display:none !important; }
+#appShell.project-rail-full #projectRailResizer,
+#appShell.project-rail-full #projectRailToggle { display:none !important; }
+#projectRailRestore {
+  position:absolute;
+  right:18px;
+  top:68px;
+  z-index:61;
+  display:none;
+  width:34px;
+  height:34px;
+  border:0;
+  background:transparent;
+  color:#625b52;
+  font-size:27px;
+  line-height:1;
+  cursor:pointer;
+}
+#appShell.project-rail-full #projectRailRestore { display:grid; place-items:center; }
+#appShell:not(.projects-active) #projectRailRestore { display:none !important; }
+
+/* 所有层级子项目都统一使用 L 型层级标识；HTML 中不再混入空格或符号。 */
+.tree-project-row[data-depth="2"] .tree-row.child,
+.tree-project-row[data-depth="3"] .tree-row.child,
+.tree-project-row[data-depth="4"] .tree-row.child,
+.tree-project-row[data-depth="5"] .tree-row.child {
+  display:flex;
+  align-items:center;
+  gap:9px;
+}
+.tree-project-row[data-depth="2"] .tree-row.child::before,
+.tree-project-row[data-depth="3"] .tree-row.child::before,
+.tree-project-row[data-depth="4"] .tree-row.child::before,
+.tree-project-row[data-depth="5"] .tree-row.child::before {
+  content:"";
+  flex:0 0 9px;
+  width:9px;
+  height:9px;
+  border-left:1.35px solid #625b52;
+  border-bottom:1.35px solid #625b52;
+  transform:translateY(-1px);
+}
+
+/* 方块完整遮盖时间线，文字始终居中，超出后省略。 */
+.today-track { isolation:isolate; }
+.today-track .session {
+  z-index:2;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-sizing:border-box;
+  background:#aaa195 !important;
+  text-align:center !important;
+  opacity:1 !important;
+}
+.today-track .session.selected { background:#9c9387 !important; }
+.today-track .session { box-shadow:inset 1px 0 0 #f7f4ed, inset -1px 0 0 #f7f4ed; }
+
+/* 收缩态：仅一枚简洁、较短的边缘胶囊；不再保留额外的上下碎片。 */
+.float-widget.is-collapsed {
+  width:32px !important;
+  height:64px !important;
+  opacity:.46 !important;
+  border:1px solid rgba(255,255,255,.42) !important;
+  background:rgba(109,99,87,.25) !important;
+  box-shadow:inset 0 1px 2px rgba(255,255,255,.58) !important;
+}
+.float-widget.is-collapsed.dock-right { border-radius:18px 0 0 18px !important; }
+.float-widget.is-collapsed.dock-left { border-radius:0 18px 18px 0 !important; }
+.float-widget.is-collapsed:has(#floatDigits)::after {
+  content:"" !important;
+  display:block !important;
+  inset:auto !important;
+  left:26px;
+  top:29px;
+  width:3px;
+  height:20px;
+  border-radius:3px;
+  background:rgba(255,255,255,.86);
+  filter:none !important;
+}
+
+/* 原生悬浮窗：主体可拖出主窗口；按钮始终保留点击能力，进入时不展开菜单。 */
+.desktop-floating,
+.desktop-floating body { background:transparent !important; overflow:hidden !important; }
+.desktop-floating .float-widget { left:16px !important; top:54px !important; -webkit-app-region:no-drag; cursor:grab; }
+.desktop-floating .float-widget button,
+.desktop-floating .float-widget input { -webkit-app-region:no-drag; }
+.desktop-floating .float-widget.is-collapsed { left:0 !important; top:0 !important; }
+
+/* 覆盖层和弹出选择器不属于窗口拖动区域，所有控件必须优先接收点击。 */
+.focus-overlay,.focus-overlay *,.path-chooser,.path-chooser * { -webkit-app-region:no-drag !important; }
+.focus-overlay { pointer-events:auto !important; }
+.focus-controls { z-index:1002 !important; pointer-events:auto !important; opacity:1 !important; }
+.focus-controls.is-hidden { opacity:1 !important; pointer-events:auto !important; }
+
+/* 本轮校正：备注入口完全融入计时页底色，不再出现白色补丁。 */
+#timerView .timer-note-trigger,
+#timerView .timer-note-trigger:hover,
+#timerView .timer-note-trigger:focus,
+#timerView .timer-note-trigger:active {
+  -webkit-appearance:none !important;
+  appearance:none !important;
+  background-color:transparent !important;
+  background-image:none !important;
+  box-shadow:none !important;
+  filter:none !important;
+  outline:none !important;
+}
+
+/* 统计筛选：日期和项目筛选共用一行，避免绝对定位导致换行/漂移。 */
+.global-stats-panel .stats-filter-row { position:static !important; display:block !important; }
+.global-stats-panel .stats-filter-top {
+  display:flex;
+  align-items:center;
+  gap:54px;
+  min-height:36px;
+}
+.global-stats-panel .global-stats-filters {
+  position:static !important;
+  display:flex !important;
+  align-items:center;
+  margin:0 !important;
+}
+.global-stats-panel .range-track { margin-top:12px; }
+
+/* 项目详情的日内时间轴与“今天”一致：按 00:00–24:00 的真实位置放置时间段。 */
+.segment-detail .time-of-day #dayTrack,
+.unassigned-detail .time-of-day #unassignedDayTrack {
+  position:relative;
+  display:block;
+  height:2px;
+  width:100%;
+  overflow:visible;
+  background:#d3cdc3;
+}
+.segment-detail .time-of-day #dayTrack .project-day-session,
+.unassigned-detail .time-of-day #unassignedDayTrack .project-day-session {
+  position:absolute;
+  top:-10px;
+  left:var(--start);
+  right:calc(100% - var(--end));
+  height:22px;
+  min-width:10px;
+  overflow:hidden;
+  border:0;
+  border-radius:2px;
+  background:#aaa092;
+  color:#fffdf9;
+  padding:0 5px;
+  font:11px/22px inherit;
+  text-align:left;
+  white-space:nowrap;
+  cursor:pointer;
+}
+.segment-detail .time-of-day #dayTrack .project-day-session.selected,
+.unassigned-detail .time-of-day #unassignedDayTrack .project-day-session.selected {
+  outline:2px solid #918676;
+  outline-offset:2px;
+}
+
+/* 详情属性使用统一基线，路径不再重复出现两个下拉符号。 */
+.segment-detail dl dt,
+.unassigned-detail dl dt {
+  display:flex;
+  align-items:baseline;
+  min-width:74px;
+  line-height:1.7;
+}
+.segment-detail .path-field,
+.unassigned-detail .path-field { align-items:baseline; }
+.segment-project-picker { line-height:1.5; }
+
+/* 收缩态仍比展开态轻，但提高可见度。 */
+.float-widget.is-collapsed {
+  opacity:.46 !important;
+  background:rgba(115,104,90,.38) !important;
+  border-color:rgba(255,255,255,.68) !important;
+  box-shadow:inset 0 1px 2px rgba(255,255,255,.68), 0 2px 6px rgba(83,70,55,.12) !important;
+}
+
+/* 详情属性：固定 14px SVG 图标，避免文字符号的尺寸与基线漂移。 */
+.segment-detail dl,
+.unassigned-detail dl { grid-template-columns:150px minmax(0,1fr); }
+.segment-detail dl dt.detail-attr,
+.unassigned-detail dl dt.detail-attr {
+  display:grid;
+  grid-template-columns:14px auto;
+  column-gap:12px;
+  align-items:center;
+  min-height:32px;
+  line-height:1;
+  white-space:normal;
+}
+.detail-attr::before { content:""; width:14px; height:14px; display:block; background-repeat:no-repeat; background-position:center; background-size:14px 14px; }
+.detail-start::before { background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cpath d='M3 2.4v9.2L11 7 3 2.4Z' fill='none' stroke='%23928675' stroke-width='1.1' stroke-linejoin='round'/%3E%3C/svg%3E"); }
+.detail-end::before { background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Crect x='3.2' y='3.2' width='7.6' height='7.6' rx='.7' fill='none' stroke='%23928675' stroke-width='1.1'/%3E%3C/svg%3E"); }
+.detail-duration::before { background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Ccircle cx='7' cy='7' r='4.7' fill='none' stroke='%23928675' stroke-width='1.1'/%3E%3Cpath d='M7 4.4v2.8l2 1.2' fill='none' stroke='%23928675' stroke-width='1.1' stroke-linecap='round'/%3E%3C/svg%3E"); }
+.detail-path::before { background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cpath d='M2.3 9.8 5.2 4.3h6.5L9 9.8H2.3Z' fill='none' stroke='%23928675' stroke-width='1.1' stroke-linejoin='round'/%3E%3C/svg%3E"); }
+.detail-note,
+.project-description p[contenteditable='true'] { cursor:text; outline:0; }
+.detail-note { display:block; min-height:24px; padding:3px 0; line-height:1.75; }
+.detail-note:focus,
+.project-description p[contenteditable='true']:focus { box-shadow:inset 0 -1px 0 #bdb2a2; }
+.note-heading { display:flex; align-items:center; gap:12px; }
+.note-heading::before { content:""; width:14px; height:14px; background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cpath d='M2.4 2.7h9.2v8.6H2.4zM4.1 5h5.8M4.1 7.2h5.8M4.1 9.4h4' fill='none' stroke='%23928675' stroke-width='1.1' stroke-linecap='round'/%3E%3C/svg%3E") center/14px 14px no-repeat; }
+
+/* 路径选择的下标使用 CSS 角标，不再由文字字符造成下边缘不齐。 */
+.today-project-picker,
+.segment-project-picker { display:inline-flex !important; align-items:baseline !important; gap:9px; }
+.today-project-picker::before,
+.segment-project-picker::after { content:""; width:6px; height:6px; flex:0 0 6px; border-right:1.35px solid #7e756a; border-bottom:1.35px solid #7e756a; transform:rotate(45deg) translateY(-2px); transform-origin:center; }
+.today-project-picker::before { order:-1; }
+.segment-project-picker::after { margin-left:2px; }
+.session-row .today-project-picker { border:0 !important; }
+.segment-detail .segment-project-picker::before { content:none !important; display:none !important; }
+
+/* 项目时间轴只表达位置与长度；文字改由悬停 title 提供。 */
+.segment-detail .time-of-day #dayTrack .project-day-session,
+.unassigned-detail .time-of-day #unassignedDayTrack .project-day-session { padding:0; min-width:4px; color:transparent; border-radius:3px; }
+
+/* 项目入口：使用独立 SVG 网格符号，不依赖字体字形。 */
+.rail-button[data-view="projects"] { display:grid; place-items:center; font-size:0 !important; }
+.rail-button[data-view="projects"] .project-grid-icon { width:25px; height:25px; fill:none !important; stroke:#514b43 !important; stroke-width:1.45; stroke-linecap:round; stroke-linejoin:round; }
+.rail-button[data-view="projects"] .project-grid-icon * { fill:none !important; stroke:#514b43 !important; stroke-width:1.45 !important; stroke-linecap:round !important; stroke-linejoin:round !important; }
+
+/* 三处路径选择保持同一规则：下标在文字前，视觉下边缘对齐。 */
+.task-picker,
+.today-project-picker,
+.segment-project-picker {
+  display:inline-flex !important;
+  align-items:flex-end !important;
+  gap:9px !important;
+  line-height:1.42 !important;
+}
+.today-project-picker::before {
+  content:"" !important;
+  display:block !important;
+  width:6px;
+  height:6px;
+  flex:0 0 6px;
+  margin:0 0 5px 0;
+  border-right:1.35px solid #7e756a;
+  border-bottom:1.35px solid #7e756a;
+  transform:rotate(45deg);
+}
+.task-picker::before { content:none !important; display:none !important; }
+.task-picker::after,
+.today-project-picker::after { content:none !important; display:none !important; }
+/* 详情页的“路径”由左侧属性图标承担；右侧只保留实际路径与下拉触发。 */
+.segment-detail .segment-project-picker,
+.unassigned-detail .segment-project-picker { display:inline-flex !important; align-items:baseline !important; gap:0 !important; line-height:1.5 !important; }
+.segment-detail .segment-project-picker::before,
+.unassigned-detail .segment-project-picker::before { content:none !important; display:none !important; }
+.segment-detail .segment-project-picker::after,
+.unassigned-detail .segment-project-picker::after { content:none !important; display:none !important; }
+
+/* 今日列表的下标使用对称 SVG，左右两笔长度一致；计时与详情路径不显示多余下标。 */
+.today-project-picker::before {
+  width:9px !important;
+  height:9px !important;
+  flex:0 0 9px !important;
+  margin:0 0 4px 0 !important;
+  border:0 !important;
+  transform:none !important;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M1.4 3.1 5 6.7l3.6-3.6' fill='none' stroke='%237e756a' stroke-width='1.35' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/9px 9px no-repeat;
+}
+
+/* 项目主页元信息同样使用固定尺寸图标并由统一网格对齐。 */
+.project-panel .project-meta { display:flex; align-items:center; gap:20px; }
+.project-panel .project-meta .meta-item { display:inline-grid; grid-template-columns:14px minmax(0,1fr); gap:8px; align-items:center; min-width:0; }
+.project-panel .project-meta .meta-item::before { content:""; width:14px; height:14px; background-repeat:no-repeat; background-position:center; background-size:14px 14px; }
+.project-panel .project-meta .meta-calendar::before { background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Crect x='2.1' y='3.1' width='9.8' height='8.5' rx='1' fill='none' stroke='%23928675' stroke-width='1.1'/%3E%3Cpath d='M4.3 1.9v2.3M9.7 1.9v2.3M2.1 5.4h9.8' fill='none' stroke='%23928675' stroke-width='1.1' stroke-linecap='round'/%3E%3C/svg%3E"); }
+.project-panel .project-meta .meta-clock::before { background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Ccircle cx='7' cy='7' r='4.7' fill='none' stroke='%23928675' stroke-width='1.1'/%3E%3Cpath d='M7 4.4v2.8l2 1.2' fill='none' stroke='%23928675' stroke-width='1.1' stroke-linecap='round'/%3E%3C/svg%3E"); }
+.project-panel .project-meta .meta-path::before { background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cpath d='M2.3 9.8 5.2 4.3h6.5L9 9.8H2.3Z' fill='none' stroke='%23928675' stroke-width='1.1' stroke-linejoin='round'/%3E%3C/svg%3E"); }
+
+/* 目录全展开：作为覆盖层存在，不移除内容区；切换栏目时由脚本恢复三栏标准布局。 */
+#appShell { position: relative; }
+#appShell.project-rail-full .workspace { display: block !important; }
+#appShell.project-rail-full #projectRail {
+  position: absolute !important;
+  inset: 0 0 0 82px !important;
+  grid-column: auto !important;
+  grid-row: auto !important;
+  z-index: 58;
+  overflow: auto;
+  /* 保持与普通目录相同的顶部基线；新增按钮只水平移到最右侧。 */
+  padding: 94px 56px 36px 42px !important;
+  background: linear-gradient(90deg, #f8f5ef 0%, #faf8f3 72%, #f8f5ef 100%) !important;
+}
+
+/* 目录覆满时，仅在右边缘中部提供恢复入口。 */
+#projectRailRestore {
+  right: 0 !important;
+  top: 50% !important;
+  transform: translateY(-50%);
+  width: 28px !important;
+  height: 68px !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: #6a6258 !important;
+  font-family: Georgia, serif;
+  font-size: 32px !important;
+  font-weight: 400;
+  line-height: 1;
+  box-shadow: none !important;
+}
+#projectRailRestore:hover { background: transparent !important; color:#3f3a34 !important; }
+
+/* 目录层级：根项目使用与路径下拉一致的细线箭头；所有子级使用严格对齐的 L 型标识。 */
+.tree-project-row[data-depth="1"] { margin-left: 0 !important; }
+.tree-project-row[data-depth="1"] .tree-row.parent {
+  display: flex !important;
+  align-items: center !important;
+  gap: 9px !important;
+  padding-left: 0 !important;
+}
+.tree-project-row[data-depth="1"] .tree-row.parent::before {
+  content: "";
+  flex: 0 0 9px;
+  width: 9px;
+  height: 9px;
+  border-right: 1.3px solid #7e756a;
+  border-bottom: 1.3px solid #7e756a;
+  transform: rotate(45deg) translate(-1px, -1px);
+}
+.tree-project-row[data-depth="2"] { margin-left: 18px !important; }
+.tree-project-row[data-depth="3"] { margin-left: 38px !important; }
+.tree-project-row[data-depth="4"] { margin-left: 58px !important; }
+.tree-project-row[data-depth="5"] { margin-left: 78px !important; }
+.tree-project-row[data-depth="2"] .tree-row.child,
+.tree-project-row[data-depth="3"] .tree-row.child,
+.tree-project-row[data-depth="4"] .tree-row.child,
+.tree-project-row[data-depth="5"] .tree-row.child {
+  padding-left: 0 !important;
+  gap: 9px !important;
+}
+
+/* 目录图标是独立按钮：一级始终显示下拉提示；有子项时可点击折叠，其他级别使用可点击的 L 型标记。 */
+.tree-project-row .tree-row::before { content:none !important; display:none !important; }
+.tree-project-row { gap:0; }
+.tree-disclosure {
+  width:18px;
+  height:28px;
+  flex:0 0 18px;
+  padding:0;
+  border:0;
+  background:transparent;
+  cursor:pointer;
+  position:relative;
+}
+.tree-disclosure::before {
+  content:"";
+  position:absolute;
+  left:4px;
+  top:9px;
+  width:8px;
+  height:8px;
+  border-right:1.3px solid #7e756a;
+  border-bottom:1.3px solid #7e756a;
+  transform:rotate(45deg) translate(-1px,-1px);
+}
+.tree-project-row[data-depth="2"] .tree-disclosure::before,
+.tree-project-row[data-depth="3"] .tree-disclosure::before,
+.tree-project-row[data-depth="4"] .tree-disclosure::before,
+.tree-project-row[data-depth="5"] .tree-disclosure::before {
+  left:5px;
+  top:8px;
+  width:8px;
+  height:9px;
+  border-right:0;
+  border-top:0;
+  border-left:1.35px solid #625b52;
+  border-bottom:1.35px solid #625b52;
+  transform:none;
+}
+.tree-project-row[data-collapsed="true"] .tree-disclosure::before { transform:rotate(-45deg) translate(-3px, 2px); }
+.tree-project-row[data-depth="2"][data-collapsed="true"] .tree-disclosure::before,
+.tree-project-row[data-depth="3"][data-collapsed="true"] .tree-disclosure::before,
+.tree-project-row[data-depth="4"][data-collapsed="true"] .tree-disclosure::before,
+.tree-project-row[data-depth="5"][data-collapsed="true"] .tree-disclosure::before { transform:rotate(-90deg); }
+.tree-disclosure:disabled { cursor:default; opacity:.58; }
+.tree-project-row .tree-row { padding-left:0 !important; }
+.project-name-editor {
+  min-width:0;
+  flex:1;
+  height:28px;
+  padding:0;
+  border:0;
+  outline:0;
+  background:transparent;
+  color:var(--ink);
+  font:inherit;
+}
+
+/* 所有文字编辑均保持无边框、无下划线，焦点不制造额外视觉噪声。 */
+[contenteditable="true"],
+[contenteditable="true"]:focus,
+.detail-note:focus,
+.project-description p[contenteditable="true"]:focus,
+.session-row .session-path:focus,
+.session-row .session-note:focus {
+  outline:none !important;
+  border-bottom:0 !important;
+  box-shadow:none !important;
+}
+
+/* 统计图：每日时长严格按筛选范围内的自然日定位；热力图按 7 天一行展示完整月份。 */
+.chart-rule { margin:12px 0 0; color:#81796e; font-size:12px; }
+.proportional-axis { overflow:visible; }
+.proportional-axis span:first-child { transform:translateX(0); }
+.proportional-axis span:last-child { transform:translateX(-100%); }
+.global-heatmap {
+  display:flex !important;
+  flex-wrap:wrap;
+  gap:30px !important;
+}
+.heatmap-month { display:grid; gap:8px; }
+.heatmap-month h3 { margin:0; color:#81796e; font-size:13px; font-weight:500; }
+.heatmap-weekdays,
+.heatmap-month-grid { display:grid; grid-template-columns:repeat(7,22px); gap:6px; }
+.heatmap-weekdays span { color:#9a9286; font-size:11px; text-align:center; }
+.heatmap-month-grid i { width:22px !important; height:22px !important; border-radius:4px !important; }
+.heatmap-month-grid .heatmap-blank { visibility:hidden; }
+
+/* 倒计时：选择层沿用主页纸张底色，仅用线条组织预设时长。 */
+.countdown-setup {
+  position:fixed;
+  inset:0;
+  z-index:70;
+  display:grid;
+  place-items:center;
+  background:transparent;
+  pointer-events:none;
+}
+.countdown-setup[hidden],
+.countdown-finished[hidden] { display:none !important; }
+.countdown-setup-card { width:min(720px, calc(100vw - 80px)); pointer-events:auto; }
+.countdown-setup-card p { margin:0 0 32px; color:#6f675d; text-align:center; font-size:15px; }
+.countdown-presets { display:grid; grid-template-columns:repeat(3, 1fr); gap:58px 96px; }
+.countdown-presets button {
+  height:96px;
+  border:1px solid #a99f91;
+  border-radius:24px;
+  background:transparent;
+  color:#332f2a;
+  font:22px/1 "Microsoft YaHei UI", "Microsoft YaHei", sans-serif;
+  cursor:pointer;
+}
+.countdown-presets button:hover { background:rgba(238,233,223,.42); }
+#timerView.countdown-choosing .timer-center > .timer-digits,
+#timerView.countdown-choosing .timer-center > .timer-actions { display:none !important; }
+.countdown-finished {
+  position:fixed;
+  inset:0;
+  z-index:100;
+  display:grid;
+  place-items:center;
+  background:rgba(247,244,237,.74);
+  backdrop-filter:blur(5px);
+}
+.countdown-finished > div {
+  min-width:300px;
+  padding:32px 36px 28px;
+  border:1px solid rgba(148,137,120,.32);
+  border-radius:18px;
+  background:rgba(247,244,237,.96);
+  box-shadow:0 18px 42px rgba(67,58,47,.12);
+  text-align:center;
+}
+.countdown-finished strong { font-size:24px; font-weight:500; }
+.countdown-finished p { margin:14px 0 24px; color:#71695e; }
+.countdown-finished button { border:0; background:transparent; color:#5c554c; font:inherit; cursor:pointer; }
+
+/* 悬浮收缩态只保留可拖动的细边缘把手；真实玻璃层与伪元素都不参与收缩态。 */
+.float-widget.is-collapsed {
+  width:24px !important;
+  height:58px !important;
+  padding:0 !important;
+  overflow:hidden !important;
+  opacity:.42 !important;
+  border:0 !important;
+  border-radius:16px 0 0 16px !important;
+  background:rgba(115,104,90,.42) !important;
+  box-shadow:inset 0 1px 2px rgba(255,255,255,.30) !important;
+  backdrop-filter:none !important;
+  -webkit-backdrop-filter:none !important;
+}
+.float-widget.is-collapsed.dock-left { border-radius:0 16px 16px 0 !important; }
+.float-widget.is-collapsed #floatReactMount,
+.float-widget.is-collapsed::before,
+.float-widget.is-collapsed::after { display:none !important; }
+.float-widget.is-collapsed:has(#floatDigits)::after {
+  content:"" !important;
+  display:block !important;
+  position:absolute !important;
+  /* 按当前可见半椭圆的实际中心校正。 */
+  left:50% !important;
+  top:20px !important;
+  width:3px !important;
+  height:20px !important;
+  border:0 !important;
+  border-radius:2px !important;
+  background:rgba(255,255,255,.72) !important;
+  transform:translateX(-50%) !important;
+}
+
+/* 播放态保留 pause.png 的纸纹和外圈；仅在“||”所在的小区域替换内部符号。 */
+#startButton.is-ready::before,
+#focusStartButton.is-ready::before {
+  content:"" !important;
+  display:block !important;
+  position:absolute !important;
+  z-index:2 !important;
+  left:calc(50% + 14px) !important;
+  /* 与 pause.png 内两根竖线的视觉中心统一。 */
+  top:calc(50% - 4px) !important;
+  width:28px !important;
+  height:34px !important;
+  border-radius:50% !important;
+  background:rgba(247,244,237,.98) !important;
+  transform:translate(-50%,-50%) !important;
+  pointer-events:none !important;
+}
+#startButton.is-ready::after,
+#focusStartButton.is-ready::after {
+  content:"" !important;
+  display:block !important;
+  position:absolute !important;
+  z-index:3 !important;
+  /* 三角形的填充重心较外接框中心偏左 1px。 */
+  left:calc(50% + 15px) !important;
+  top:calc(50% - 4px) !important;
+  width:0 !important;
+  height:0 !important;
+  border:0 !important;
+  border-top:10px solid transparent !important;
+  border-bottom:10px solid transparent !important;
+  border-left:15px solid #4b4741 !important;
+  transform:translate(-42%,-50%) !important;
+  pointer-events:none !important;
+}
+
+/* 悬浮数字是操作面板，不允许双击时被浏览器选中。 */
+.float-widget,
+.float-widget * { user-select:none; -webkit-user-select:none; }
+/* Frameless Electron window: the app bar owns all three window controls. */
+.window-bar { height:46px !important; padding:0 24px !important; -webkit-app-region:drag; }
+.window-drag-region { flex:1; height:100%; }
+.window-controls { -webkit-app-region:no-drag; align-self:stretch; gap:20px !important; }
+.window-controls button { width:18px; height:100%; padding:0; appearance:none; border:0 !important; outline:0; box-shadow:none; background:transparent !important; color:#45413c; font:20px/1 "Segoe UI",sans-serif; cursor:pointer; }
+.window-controls button:hover { color:#1f1d1a; }
+.window-controls button[data-window-control="close"]:hover { color:#a84743; }
+.workspace { -webkit-app-region:no-drag !important; }
+.workspace button,.workspace input,.workspace textarea,.workspace select,.workspace [contenteditable="true"] { -webkit-app-region:no-drag; }
+.view { height:calc(100vh - 46px) !important; }
+
+/* 专注态数字只能显示，不允许浏览器文本选择。 */
+.focus-overlay,.focus-digits { user-select:none !important; -webkit-user-select:none !important; }
+/* 倒计时切换和所有路径选择器明确脱离窗口拖动区域。 */
+#modePicker,#modeMenu,#countdownSetup,.path-chooser,.path-chooser * { -webkit-app-region:no-drag !important; pointer-events:auto !important; }
+#modeMenu { z-index:120 !important; }
+#timerView.countdown-choosing #timerDigits,
+#timerView.countdown-choosing .timer-actions { display:none !important; }
+/* 收缩态按原尺寸的 2/3 等比例缩小；四边均可停靠。 */
+.float-widget.is-collapsed { width:14px !important; height:43px !important; border-radius:12px 0 0 12px !important; }
+.float-widget.is-collapsed.dock-left { border-radius:0 12px 12px 0 !important; }
+.float-widget.is-collapsed.dock-top,.float-widget.is-collapsed.dock-bottom { width:43px !important; height:14px !important; border-radius:0 0 12px 12px !important; }
+.float-widget.is-collapsed.dock-bottom { border-radius:12px 12px 0 0 !important; }
+.float-widget.is-collapsed:has(#floatDigits)::after { left:6px !important; top:15px !important; width:2px !important; height:13px !important; }
+.float-widget.is-collapsed.dock-top:has(#floatDigits)::after,.float-widget.is-collapsed.dock-bottom:has(#floatDigits)::after { left:15px !important; top:6px !important; width:13px !important; height:2px !important; transform:none !important; }
+
+/* 悬浮态四按钮中的第二枚沿用暂停的圆形底图；暂停时只换其内部符号。 */
+#floatToggleButton { position:absolute !important; }
+.float-widget.is-paused #floatToggleButton::before { content:""; position:absolute; inset:7px; border-radius:50%; background:rgba(247,244,237,.96); z-index:2; }
+.float-widget.is-paused #floatToggleButton::after { content:""; position:absolute; z-index:3; left:20px; top:10px; width:0; height:0; border-top:8px solid transparent; border-bottom:8px solid transparent; border-left:12px solid #4b4741; pointer-events:none; }
+.float-widget.is-paused #floatToggleButton img { opacity:0; }
+/* 第一枚是置顶，开始/暂停仅由悬浮主体双击触发。 */
+#floatToggleButton .float-pin-icon { position:relative; display:block; width:18px; height:20px; color:#625d56; transform:rotate(45deg); }
+#floatToggleButton .float-pin-icon::before { content:""; position:absolute; left:3px; top:1px; width:12px; height:8px; border:1.5px solid currentColor; border-radius:3px 3px 2px 2px; box-shadow:inset 0 -2px 0 rgba(98,93,86,.18); }
+#floatToggleButton .float-pin-icon::after { content:""; position:absolute; left:8px; top:8px; width:2px; height:11px; border-radius:2px; background:currentColor; }
+.float-widget.is-paused #floatToggleButton::before,.float-widget.is-paused #floatToggleButton::after { display:none !important; }
+
+/* 专注读数不是可编辑文本，双击只用于进入真正的系统全屏。 */
+.focus-overlay .focus-digits,
+.focus-overlay .focus-digits * { user-select:none !important; -webkit-user-select:none !important; }
+
+/* 专注态必须独占整个原生窗口，不保留主界面的左侧导航、目录或窗口边界内容。 */
+#focusOverlay:not([hidden]) {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  min-width: 100vw !important;
+  min-height: 100vh !important;
+  z-index: 2147483647 !important;
+}
+
+/* 今日记录较多时，仅时间段列表滚动，标题与时间轴保持可见。 */
+#todayView { height:calc(100vh - 46px) !important; min-height:0 !important; overflow:hidden !important; }
+#todayView.active { display:grid !important; grid-template-rows:auto auto minmax(0,1fr); }
+#todayView .page-heading,#todayView .day-line { min-height:0; }
+#todayView .session-list { min-height:0; height:100%; max-height:100%; overflow-y:auto; overscroll-behavior:contain; padding:0 10px 24px 0; scrollbar-width:thin; scrollbar-color:#b5ab9d transparent; }
+#todayView .session-list::-webkit-scrollbar { width:8px; }
+#todayView .session-list::-webkit-scrollbar-track { background:transparent; }
+#todayView .session-list::-webkit-scrollbar-thumb { border:2px solid transparent; border-radius:999px; background:#b5ab9d; background-clip:padding-box; }
+#todayView .session-list::-webkit-scrollbar-thumb:hover { background:#968c7e; background-clip:padding-box; }
+
+/* 倒计时选择层不拦截左侧栏目；切走时隐藏，返回计时栏目后恢复选择页。 */
+.icon-rail { position:relative; z-index:90; }
+
+/* 收缩态由渲染层接收鼠标：短按可恢复，长按仍交给主进程沿屏幕边缘拖动。 */
+.desktop-floating .float-widget.is-collapsed { -webkit-app-region:no-drag !important; }
+
+/* 列表滚动条单独向容器右侧让出，避免贴着时间段详情列。 */
+#todayView .session-list { margin-right:-24px !important; padding-right:34px !important; }
+
+/* 图二的时间块规格：同一条细基线上，长记录是完整块、短记录是细竖块。 */
+#todayView .today-track .session { top:-14px !important; height:28px !important; min-width:4px !important; padding:0 !important; border-radius:2px !important; }
+#todayView .today-track .session.selected { outline:2px solid rgba(103,93,80,.58) !important; outline-offset:2px !important; }
+
+/* 悬浮态菜单：hidden 必须优先于液态玻璃层的默认 display，打开后再沿原弧线显现。 */
+html.desktop-floating #floatMenu[hidden] { display:none !important; }
+html.desktop-floating .float-widget { -webkit-app-region:no-drag !important; }
+#floatMenu #floatOpenMainButton { left:-58px !important; top:-14px !important; }
+#floatMenu #floatCloseButton { left:-58px !important; top:36px !important; }
+.float-menu .float-action.is-pinned { color:#302d28 !important; background:rgba(219,213,203,.90) !important; }
+#floatToggleButton .float-pin-icon { display:block; width:19px; height:19px; transform:none !important; color:currentColor; fill:none; stroke:currentColor; stroke-width:1.55; stroke-linecap:round; stroke-linejoin:round; }
+#floatToggleButton .float-pin-icon::before,#floatToggleButton .float-pin-icon::after { content:none !important; }
+.float-open-main-icon { position:relative; display:block; width:17px; height:14px; border:1.5px solid currentColor; border-radius:2px; }
+.float-open-main-icon::after { content:""; position:absolute; right:-3px; top:-4px; width:7px; height:7px; border-top:1.5px solid currentColor; border-right:1.5px solid currentColor; }
+.float-close-icon { position:relative; display:block; width:16px; height:16px; }
+.float-close-icon::before,.float-close-icon::after { content:""; position:absolute; left:7px; top:1px; width:1.5px; height:14px; border-radius:2px; background:currentColor; }
+
+/* 2026.08.26.27：专注态、今日和目录采用互不覆盖的最终布局规则。 */
+#focusOverlay:not([hidden]) {
+  position:fixed !important;
+  inset:0 !important;
+  width:100vw !important;
+  height:100vh !important;
+  z-index:2147483647 !important;
+}
+#appShell:has(#focusOverlay:not([hidden])) > .icon-rail,
+#appShell:has(#focusOverlay:not([hidden])) > #projectRail,
+#appShell:has(#focusOverlay:not([hidden])) > #projectRailResizer,
+#appShell:has(#focusOverlay:not([hidden])) > #projectRailToggle {
+  visibility:hidden !important;
+}
+
+/* 恢复用户确认过的今日时间线：一根细基线、长记录为实心矩形、短记录为细竖块。 */
+#todayView .day-line { min-height:108px !important; }
+#todayView .today-track {
+  height:44px !important;
+  align-self:center !important;
+  border-top:2px solid #d4cec3 !important;
+  background:transparent !important;
+}
+#todayView .today-track .session {
+  top:-9px !important;
+  height:18px !important;
+  min-width:3px !important;
+  padding:0 !important;
+  border-radius:0 !important;
+  background:#aaa195 !important;
+  box-shadow:none !important;
+  color:transparent !important;
+  font-size:0 !important;
+}
+#todayView .today-track .session.selected {
+  outline:2px solid rgba(103,93,80,.42) !important;
+  outline-offset:2px !important;
+  background:#9c9387 !important;
+}
+
+/* 今日时间线恢复为此前确认的完整区域：标题、上下分隔线、时间轴与记录列表保持同一节奏。 */
+#todayView { height:auto !important; overflow-y:auto !important; }
+#todayView.active { display:block !important; }
+#todayView .day-line {
+  min-height:102px !important;
+  margin:64px 0 42px !important;
+  padding:20px 0 !important;
+  border-top:1px solid var(--line) !important;
+  border-bottom:1px solid var(--line) !important;
+}
+#todayView .today-track { height:44px !important; }
+#todayView .session-list { height:auto !important; max-height:none !important; overflow:visible !important; margin-right:0 !important; padding-right:0 !important; }
+
+/* 时间文字的中线与 00:00–24:00 基线严格重合；时间块也以同一中线定位。 */
+#todayView .today-track { border-top:0 !important; position:relative; }
+#todayView .today-track::before { content:""; position:absolute; left:0; right:0; top:50%; border-top:2px solid #d4cec3; }
+#todayView .today-track .session { top:calc(50% - 9px) !important; border-radius:5px !important; }
+
+/* 每一根细刻度对应筛选范围内的一天；标签位置与同一日期的柱形严格共用比例。 */
+.proportional-bars { background:repeating-linear-gradient(to right, transparent 0, transparent calc(var(--day-step) - 1px), rgba(205,198,187,.52) calc(var(--day-step) - 1px), rgba(205,198,187,.52) var(--day-step)); background-size:100% 7px; background-repeat:no-repeat; background-position:left bottom; }
+
+/* 左侧栏缩为原来的 4/5；项目目录恢复后默认为更紧凑的宽度。 */
+#appShell { --project-rail-width:258px; grid-template-columns:66px var(--project-rail-width) minmax(0,1fr) !important; }
+#appShell:not(.projects-active) { grid-template-columns:66px minmax(0,1fr) !important; }
+.icon-rail { padding-left:5px !important; padding-right:5px !important; }
+#projectRailResizer { left:calc(66px + var(--project-rail-width) - 4px) !important; }
+#projectRailToggle { left:calc(66px + var(--project-rail-width) + 9px) !important; }
+#appShell.project-rail-closed #projectRailToggle { left:75px !important; }
+#appShell.project-rail-full { grid-template-columns:66px minmax(0,1fr) !important; }
+.float-close-icon::before { transform:rotate(45deg); }.float-close-icon::after { transform:rotate(-45deg); }
+
+/* 目录按钮单独落在项目标题上方；路径始终显示完整的父级链。 */
+#projectRailToggle { top:42px !important; }
+.project-panel .project-meta .meta-path { flex:1 1 auto; overflow:visible !important; text-overflow:clip !important; }
+
+/* 项目标题上方的目录按钮落在标题上沿与顶部分隔线的垂直中点。 */
+#projectRailToggle { top:53px !important; }
+
+/* 时间分布的日期列固定宽度，所有时间段从同一条左侧基准线开始。 */
+.global-stats-module .global-timeline > div { display:grid; grid-template-columns:120px minmax(0,1fr); gap:20px; }
+.global-stats-module .global-timeline > div time { width:auto; }
+.global-stats-module .global-timeline > div .global-bar { display:block; min-width:0; }
+
+/* 系统内确认层：替代 Electron 原生弹窗，保持纸张、细线与暖灰层级。 */
+.app-confirm { position:fixed; inset:0; z-index:200; display:grid; place-items:center; background:rgba(247,244,237,.48); backdrop-filter:blur(4px); }
+.app-confirm[hidden] { display:none !important; }
+.app-confirm-card { width:min(390px,calc(100vw - 48px)); padding:25px 26px 20px; border:1px solid rgba(150,139,121,.34); border-radius:16px; background:rgba(250,248,243,.98); box-shadow:0 18px 48px rgba(67,58,47,.16); }
+.app-confirm-card h2 { margin:0 0 12px; font-size:18px; font-weight:600; }
+.app-confirm-card p { margin:0; color:#71695e; line-height:1.75; }
+.app-confirm-card footer { display:flex; justify-content:flex-end; gap:12px; margin-top:22px; }
+.app-confirm-card button { min-width:66px; padding:8px 14px; border:1px solid #d4cec3; border-radius:8px; background:transparent; color:#5b554d; font:inherit; cursor:pointer; }
+.app-confirm-card [data-confirm-ok] { border-color:#938777; background:#eee8de; color:#332f2a; }

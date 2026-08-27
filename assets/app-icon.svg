@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" fill="none">
+  <!-- 百万拳时间：秒表与握拳使用同一套圆角单线条。 -->
+  <g stroke="#202526" stroke-width="52" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M402 460C430 338 532 260 664 260c177 0 320 143 320 320S841 900 664 900c-76 0-146-27-201-72"/>
+    <path d="M623 260v-79"/>
+    <path d="M574 82c0-29 23-52 52-52h79c54 0 96 27 123 76l76 143"/>
+    <path d="M574 181h126"/>
+    <path d="M665 570l116-100"/>
+    <path d="M624 611h1"/>
+    <!-- 参考图中的三段完整握拳线条：拇指、食指与下方手指均保留为独立圆角闭环。 -->
+    <ellipse cx="332" cy="496" rx="119" ry="71" transform="rotate(35 332 496)"/>
+    <ellipse cx="330" cy="634" rx="121" ry="71" transform="rotate(35 330 634)"/>
+    <ellipse cx="358" cy="766" rx="105" ry="62" transform="rotate(35 358 766)"/>
+  </g>
+</svg>

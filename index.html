@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>百万拳 · 时间</title>
+    <link rel="icon" href="/assets/app-icon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="styles.css?v=7" />
+  <link rel="stylesheet" href="icon-overrides.css?v=80" />
+  </head>
+  <body>
+    <main class="app-shell" id="appShell">
+      <aside class="icon-rail" aria-label="主导航">
+        <button class="rail-button active" data-view="timer" title="计时">◷</button>
+        <button class="rail-button" data-view="today" title="今日">□</button>
+        <button class="rail-button" data-view="projects" title="项目" aria-label="项目"><svg class="project-grid-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.25" y="3.25" width="17.5" height="17.5" rx=".35"></rect><path d="M3.5 9h17M3.5 15h17M9 3.5v17M15 3.5v17"></path></svg></button>
+        <button class="rail-button" data-view="timeline" title="时间线">⌇</button>
+      </aside>
+
+      <aside class="project-rail" id="projectRail" aria-label="项目目录">
+        <div class="project-tree" id="projectTree">
+          <div class="tree-project-row archivable" data-depth="1"><button class="tree-disclosure" type="button" aria-label="展开或收起 百万拳桌面软件"></button><button class="tree-row parent" data-project-name="百万拳桌面软件">百万拳桌面软件</button><button class="tree-add-child" title="创建子项目" aria-label="创建子项目">＋</button></div>
+              <div class="tree-project-row archivable" data-depth="2"><button class="tree-disclosure" type="button" aria-label="展开或收起 界面设计"></button><button class="tree-row child active" data-project-name="界面设计">界面设计</button><button class="tree-add-child" title="创建子项目" aria-label="创建子项目">＋</button></div>
+              <div class="tree-project-row archivable" data-depth="3"><button class="tree-disclosure" type="button" aria-label="展开或收起 需求梳理"></button><button class="tree-row child" data-project-name="需求梳理">需求梳理</button><button class="tree-add-child" title="创建子项目" aria-label="创建子项目">＋</button></div>
+              <div class="tree-project-row archivable" data-depth="3"><button class="tree-disclosure" type="button" aria-label="展开或收起 交互设计"></button><button class="tree-row child" data-project-name="交互设计">交互设计</button><button class="tree-add-child" title="创建子项目" aria-label="创建子项目">＋</button></div>
+          <button class="tree-row pending" data-project-name="待分配时间段">◌　待分配时间段</button>
+          <button class="tree-row segment-node" draggable="true" data-project-name="待分配时间段" data-start="20:10" data-end="20:42">　　20:10 – 20:42</button>
+          <button class="tree-add" title="创建项目">＋</button>
+        </div>
+        <label class="archive-toggle"><input id="showArchivedProjects" type="checkbox" /> 显示归档项目</label>
+      </aside>
+
+      <section class="workspace">
+        <header class="window-bar">
+          <div class="window-drag-region"></div>
+          <div class="window-controls" aria-label="窗口控制">
+            <button type="button" data-window-control="minimize" aria-label="最小化">−</button>
+            <button type="button" data-window-control="maximize" aria-label="最大化或还原">□</button>
+            <button type="button" data-window-control="close" aria-label="关闭">×</button>
+          </div>
+        </header>
+
+        <section class="view active" id="timerView">
+          <div class="timer-header">
+            <button class="task-picker" id="taskPicker">待分配时间段</button>
+            <div class="task-menu" id="taskMenu" hidden>
+              <button data-task="">待分配时间段</button>
+              <button data-task="百万拳桌面软件 / 界面设计">百万拳桌面软件 / 界面设计</button>
+              <button data-task="new">＋ 新建项目</button>
+            </div>
+            <div class="new-project-menu" id="newProjectMenu" hidden><label>创建到<button class="new-project-parent-picker" id="newProjectParentPicker" type="button">⌄　顶层项目</button><input id="newProjectParent" type="hidden" value="1" /></label><button id="createProjectConfirm">创建项目</button></div>
+            <div class="timer-header-actions">
+              <button class="mode-picker" id="modePicker">秒表　⌄</button>
+              <div class="mode-menu" id="modeMenu" hidden><button data-mode="秒表">秒表</button><button data-mode="倒计时">倒计时</button></div>
+              <button class="quiet-icon" id="focusButton" title="专注态">⌗</button>
+              <button class="quiet-icon" id="floatButton" title="悬浮态">▣</button>
+            </div>
+          </div>
+          <div class="timer-center">
+            <output class="timer-digits" id="timerDigits">01:24:36</output>
+            <div class="timer-actions">
+              <div class="trim-stack">
+                <div class="trim-editor" id="trimEditor" hidden>
+                  <input value="01" maxlength="2" aria-label="小时" />
+                  <span>:</span><input value="24" maxlength="2" aria-label="分钟" />
+                  <span>:</span><input value="36" maxlength="2" aria-label="秒" />
+                </div>
+                <button class="round-action has-raster" id="trimButton" title="截取时间" aria-label="截取时间"><img src="assets/trim.png?v=1" alt="" /></button>
+              </div>
+              <button class="round-action has-raster" id="startButton" title="暂停" aria-label="暂停"><img src="assets/pause.png?v=1" alt="" /></button>
+              <button class="round-action has-raster" id="saveButton" title="保存本段时间" aria-label="保存本段时间"><img src="assets/save.png?v=1" alt="" /></button>
+              <button class="round-action has-raster" id="discardButton" title="作废" aria-label="作废"><img src="assets/discard.png?v=1" alt="" /></button>
+            </div>
+          </div>
+          <button class="timer-note-trigger" id="timerNoteButton" type="button">备注</button>
+          <div class="timer-note-panel" id="timerNotePanel" hidden><label>备注<textarea id="timerNote" maxlength="240" placeholder="记录本段时间做了什么…"></textarea></label></div>
+          <footer class="today-strip"><span>今天　3小时42分</span></footer>
+        </section>
+
+        <section class="view" id="todayView">
+          <div class="page-heading"><h1>今天</h1><p>3小时42分 · 4 个时间段</p></div>
+          <div class="day-line" aria-label="今日时间轴">
+            <span class="day-label">00:00</span><div class="today-track" id="todayTrack">
+              <button class="session long selected" data-session="s1" style="--start:38.2%;--end:43.4%" title="需求梳理 · 09:10–10:25" aria-label="需求梳理 · 09:10–10:25"></button>
+              <button class="session medium" data-session="s2" style="--start:46.2%;--end:51.4%" title="界面设计 · 11:05–12:20">界面设计</button>
+              <button class="session short" data-session="s3" style="--start:58.3%;--end:64.1%" title="英语学习 · 14:00–15:27">英语学习</button>
+              <button class="session micro" data-session="s4" style="--start:84%;--end:86.25%" title="待分配时间段 · 20:10–20:42"></button>
+            </div><span class="day-label">24:00</span>
+          </div>
+          <div class="session-list">
+            <article class="session-row selected" data-session="s1"><b>09:10 – 10:25</b><button class="today-project-picker" title="选择所属项目">百万拳桌面软件 / 需求梳理</button><span class="session-note" contenteditable="true" title="点击编辑备注">梳理页面的信息层级</span><em>1小时15分</em></article>
+            <article class="session-row" data-session="s2"><b>11:05 – 12:20</b><button class="today-project-picker" title="选择所属项目">百万拳桌面软件 / 界面设计</button><span class="session-note" contenteditable="true" title="点击编辑备注">调整布局和视觉细节</span><em>1小时15分</em></article>
+            <article class="session-row" data-session="s3"><b>14:00 – 15:27</b><button class="today-project-picker" title="选择所属项目">英语学习 / 听力练习</button><span class="session-note" contenteditable="true" title="点击编辑备注">完成听力精听与复盘</span><em>1小时27分</em></article>
+            <article class="session-row" data-session="s4"><b>20:10 – 20:42</b><button class="today-project-picker" title="选择所属项目">待分配时间段</button><span class="session-note" contenteditable="true" title="点击编辑备注">补充记录或分配项目</span><em>0小时32分</em></article>
+          </div>
+        </section>
+
+        <section class="view" id="projectsView">
+          <div class="project-header">
+            <div>
+              <h1 id="projectTitle" contenteditable="true" data-edit-key="active-project-name" title="点击修改项目名称">界面设计</h1>
+              <nav class="project-tabs" aria-label="项目详情"><button class="active" data-project-tab="home">主页</button><button data-project-tab="segments">时间段</button><button data-project-tab="stats">统计</button></nav>
+            </div>
+            <div class="project-state"><button id="archiveProject">▢ 归档</button></div>
+          </div>
+          <div class="project-panel active" id="projectHome">
+            <div class="project-meta"><span class="meta-item meta-calendar">开始于 2026年7月15日</span><span class="meta-item meta-clock">26 个时间段</span><span class="meta-item meta-path" title="百万拳桌面软件 / 产品设计 / 界面设计">百万拳桌面软件 / 产品设计 / …</span></div>
+            <div class="project-overview"><div><small>累计时间</small><strong>18小时36分</strong></div><div class="project-description"><small>项目说明</small><p contenteditable="true" data-edit-key="project-description" title="点击编辑项目说明">专注于界面设计系统搭建与页面优化。<br />涵盖模块组件、视觉规范与交互细节。</p></div></div>
+            <div class="weekly-bars"><h2>最近 7 天的记录</h2><div class="bars"><i style="--h:24%"></i><i style="--h:58%"></i><i style="--h:36%"></i><i style="--h:78%"></i><i style="--h:61%"></i><i style="--h:43%"></i><i style="--h:25%"></i></div><div class="bar-labels"><span>7/12</span><span>7/13</span><span>7/14</span><span>7/15</span><span>7/16</span><span>7/17</span><span>7/18</span></div></div>
+          </div>
+
+          <div class="project-panel" id="projectSegments">
+            <div class="range-filter interactive-range" id="segmentRange" style="--start:0%;--end:100%"><div class="date-inputs"><input id="rangeStart" type="date" value="2026-07-15" /><span>—</span><input id="rangeEnd" type="date" value="2026-07-18" /></div><div class="range-track" aria-label="项目周期内的日期位置"><b></b><i class="start-handle" data-bound="start"></i><i class="end-handle" data-bound="end"></i></div><div class="range-boundaries"><span>项目开始　2026年7月15日</span><span>最近记录　2026年7月18日</span></div></div>
+            <div class="segment-layout"><div class="selector-columns"><aside class="date-sessions" aria-label="日期选择"><button class="date-choice selected" data-iso="2026-07-15" data-date="7月15日（周二）">7月15日（周二）</button><button class="date-choice" data-iso="2026-07-16" data-date="7月16日（周三）">7月16日（周三）</button><button class="date-choice" data-iso="2026-07-18" data-date="7月18日（周五）">7月18日（周五）</button></aside><aside class="day-sessions" aria-label="时间段选择"><button class="time-choice selected" data-start="09:10" data-end="10:25">09:10 – 10:25</button><button class="time-choice" data-start="11:05" data-end="12:30">11:05 – 12:30</button><button class="time-choice" data-start="14:15" data-end="15:10">14:15 – 15:10</button><button class="time-choice" data-start="16:00" data-end="17:20">16:00 – 17:20</button></aside></div><article class="segment-detail"><div class="time-of-day"><span>00:00</span><div id="dayTrack" style="--start:38.2%;--end:43.4%"><i></i><b></b><b></b></div><span>24:00</span></div><h2 id="segmentDuration">1小时15分</h2><div class="session-project-menu" id="assignedProjectMenu" hidden><button data-path="">待分配时间段</button><button data-path="百万拳桌面软件 / 界面设计">百万拳桌面软件 / 界面设计</button><button data-path="百万拳桌面软件 / 界面设计 / 需求梳理">百万拳桌面软件 / 界面设计 / 需求梳理</button><button data-path="new">＋ 新建项目</button></div><dl><dt class="detail-attr detail-path">路径</dt><dd><button class="segment-project-picker" id="assignedProjectPicker">界面设计 / 视觉设计 / 页面布局优化</button></dd><dt class="detail-attr detail-start">开始</dt><dd id="segmentStart">2026年7月15日　09:10</dd><dt class="detail-attr detail-end">结束</dt><dd id="segmentEnd">2026年7月15日　10:25</dd><dt class="detail-attr detail-duration">时长</dt><dd id="segmentLength">1小时15分</dd></dl><hr /><p class="note-heading">备注</p><small class="detail-note" contenteditable="true" data-edit-key="project-segment-note" title="点击编辑备注">优化详情页信息层级与间距，调整卡片样式与图标对齐。</small></article></div>
+          </div>
+
+          <div class="project-panel" id="projectStats">
+            <div class="range-filter interactive-range" id="statsRange" style="--start:0%;--end:100%"><div class="date-inputs"><input id="statsRangeStart" type="date" value="2026-07-15" /><span>—</span><input id="statsRangeEnd" type="date" value="2026-07-18" /></div><div class="range-track"><b></b><i class="start-handle" data-bound="start"></i><i class="end-handle" data-bound="end"></i></div><div class="range-boundaries"><span>项目开始　2026年7月15日</span><span>最近记录　2026年7月18日</span></div></div>
+            <section class="chart-section"><h2>每日时长（小时）</h2><div class="stats-bars"><i style="--h:68%" title="7月15日：2小时20分"></i><i style="--h:30%" title="7月16日：52分"></i><i style="--h:0%" title="7月17日：无记录"></i><i style="--h:22%" title="7月18日：35分"></i></div><div class="chart-axis"><span>7/15</span><span>7/16</span><span>7/17</span><span>7/18</span></div></section>
+            <section class="heat-section"><h2>活动热力图</h2><div class="heatmap" id="heatmap"></div></section>
+          </div>
+          <section class="unassigned-detail" id="unassignedDetail" hidden><div class="time-of-day"><span>00:00</span><div id="unassignedDayTrack"><button type="button" class="project-day-session selected" style="--start:84.03%;--end:86.25%" title="20:10 – 20:42 · 0小时32分" aria-label="20:10 – 20:42 · 0小时32分"></button></div><span>24:00</span></div><h2>0小时32分</h2><div class="session-project-menu" id="sessionProjectMenu" hidden><button data-path="百万拳桌面软件 / 界面设计">百万拳桌面软件 / 界面设计</button><button data-path="百万拳桌面软件 / 界面设计 / 需求梳理">百万拳桌面软件 / 界面设计 / 需求梳理</button></div><dl><dt class="detail-attr detail-path">路径</dt><dd><button class="segment-project-picker" id="sessionProjectPicker">选择所属项目</button></dd><dt class="detail-attr detail-start">开始</dt><dd>2026年7月15日　20:10</dd><dt class="detail-attr detail-end">结束</dt><dd>2026年7月15日　20:42</dd><dt class="detail-attr detail-duration">时长</dt><dd>0小时32分</dd></dl><hr /><p class="note-heading">备注</p><small class="detail-note" contenteditable="true" data-edit-key="unassigned-segment-note" title="点击编辑备注">优化详情页信息层级与间距，调整卡片样式与图标对齐。</small></section>
+        </section>
+
+        <section class="view" id="timelineView"><div class="page-heading"><h1>时间线</h1></div><div class="range-filter interactive-range" id="timelineRange" style="--start:0%;--end:100%"><div class="date-inputs"><input id="timelineRangeStart" type="date" value="2026-07-01" /><span>—</span><input id="timelineRangeEnd" type="date" value="2026-07-31" /></div><div class="range-track"><b></b><i class="start-handle" data-bound="start"></i><i class="end-handle" data-bound="end"></i></div><div class="range-boundaries"><span>2026年7月1日</span><span>2026年7月31日</span></div></div><div class="global-timeline"><div><time>7月2日</time><span class="global-bar w40" title="百万拳桌面软件 / 界面设计 / 页面布局优化&#10;09:10–10:25 · 1小时15分">界面设计　1小时15分</span></div><div><time>7月6日</time><span class="global-bar w65" title="英语学习 / 听力练习&#10;14:00–15:27 · 1小时27分">英语学习　1小时27分</span></div><div><time>7月15日</time><span class="global-bar w88" title="百万拳桌面软件 / 交互设计 / 悬浮态操作&#10;09:10–11:45 · 2小时35分">百万拳桌面软件　2小时35分</span></div></div></section>
+      </section>
+    </main>
+
+    <div class="focus-overlay" id="focusOverlay" hidden><div class="focus-digits">01:24:36</div><div class="focus-controls">
+      <div class="focus-trim-stack"><div class="focus-trim-editor" id="focusTrimEditor" hidden><input value="01" maxlength="2" aria-label="小时" /><span>:</span><input value="24" maxlength="2" aria-label="分钟" /><span>:</span><input value="36" maxlength="2" aria-label="秒" /></div><button class="has-raster" id="focusTrimButton" title="截取时间" aria-label="截取时间"><img src="assets/trim.png?v=1" alt="" /></button></div>
+      <button class="has-raster" id="focusStartButton" title="暂停" aria-label="暂停"><img src="assets/pause.png?v=1" alt="" /></button>
+      <button class="has-raster" id="focusSaveButton" title="保存" aria-label="保存"><img src="assets/save.png?v=1" alt="" /></button>
+      <button class="has-raster" id="focusDiscardButton" title="作废" aria-label="作废"><img src="assets/discard.png?v=1" alt="" /></button>
+    </div><button class="leave-focus" id="leaveFocus">×</button></div>
+    <div class="float-widget" id="floatWidget" hidden><div id="floatReactMount" aria-hidden="true"></div><span id="floatDigits"><i class="time-part time-hour">01:</i><i class="time-part time-minute">24:</i><i class="time-part time-second">36</i></span><div class="float-editor" id="floatEditor" hidden><small>01:24:36</small><div><input value="01" maxlength="2" aria-label="小时" /><b>:</b><input value="24" maxlength="2" aria-label="分钟" /><b>:</b><input value="36" maxlength="2" aria-label="秒" /></div></div><div class="float-menu" id="floatMenu" hidden><button class="float-action" id="floatToggleButton" title="置顶" aria-label="置顶"><svg class="float-pin-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h10v5l2 2v2H5v-2l2-2V3Z"/><path d="M12 12v8"/></svg></button><button class="float-action" id="floatSaveButton" title="保存" aria-label="保存"><img src="assets/save-transparent.png?v=1" alt="" /></button><button class="float-action" id="floatTrimButton" title="截取时间" aria-label="截取时间"><img src="assets/trim-transparent-v2.png?v=1" alt="" /></button><button class="float-action" id="floatDiscardButton" title="作废" aria-label="作废"><img src="assets/discard-transparent.png?v=1" alt="" /></button><button class="float-action" id="floatOpenMainButton" title="打开主界面" aria-label="打开主界面"><span class="float-open-main-icon" aria-hidden="true"></span></button><button class="float-action" id="floatCloseButton" title="关闭悬浮态" aria-label="关闭悬浮态"><span class="float-close-icon" aria-hidden="true"></span></button></div></div>
+
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

@@ -1,0 +1,17 @@
+node_modules/
+dist/
+data/
+data-dev/
+.local-cache/
+.pnpm-store/
+release/
+release-current/
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+*.log
+node-v*.zip
+tools/node-v*-win-x64/
+current-page.png
+play-state.png
+System.Management.Automation.Internal.Host.InternalHost
