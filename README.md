@@ -1,96 +1,62 @@
 # 百万拳时间
 
-一个本地优先的学习与专注计时器。数据默认保存在本机 SQLite 文件中；无需账号、无需联网，也不把学习记录上传到第三方服务。
+一个本地优先的 Windows 专注计时与项目管理工具。无需账号、无需联网；项目、时间段和统计数据默认只保存在你的电脑上。
 
-## 当前架构
+## 下载与安装
 
-- Vite 前端：主页、专注态、悬浮态、项目目录、时间段与统计界面。
-- Node.js 本地服务：同源 REST API、静态文件托管、请求体限制与统一错误响应。
-- SQLite：WAL 模式、外键、事务迁移、软删除和审计日志。
-- 数据规则：项目最多五层；归档与删除分离；时间段允许独立存在，之后再分配项目。
+前往仓库的 [Releases](../../releases) 页面下载最新的 `百万拳时间 Setup.exe`。
 
-## 运行
+1. 双击安装包。
+2. 在安装向导中选择安装位置；不想继续时可随时点击“取消”。
+3. 安装完成后，从开始菜单或桌面打开“百万拳时间”。
 
-需要 Node.js 22.5 或更高版本（使用内置 `node:sqlite`）和 pnpm 9+。建议先执行 `corepack enable`，再使用项目锁文件安装依赖。
+> 当前发布版本面向 Windows 10 / 11 64 位系统。普通使用者无需安装 Node.js、pnpm 或其他开发工具。
+
+## 主要功能
+
+- **专注计时**：支持秒表、倒计时、暂停、截取、保存和作废当前时间段。
+- **项目管理**：支持多层级项目目录、重命名、说明编辑、归档与恢复。
+- **时间归属**：时间段可先保持未分配，再关联到任意项目；项目选择器与项目目录实时同步。
+- **数据统计**：查看今日时间线、项目累计时长、时间分布、每日时长和活动热力图。
+- **专注体验**：提供专注态与悬浮计时窗口，保存或废弃时间段后仍保持当前专注界面。
+- **本地数据**：使用 SQLite 保存数据，支持导出完整 JSON 备份；不依赖云端账号。
+
+## 数据与隐私
+
+应用数据只保存在当前 Windows 用户目录中，不会上传到第三方服务。卸载应用不会自动删除你的项目和时间记录；如需迁移设备，建议先在应用中导出 JSON 备份。
+
+## 界面截图
+
+### 今日时间线
+
+按 00:00–24:00 的完整尺度查看当日专注记录，并在下方快速浏览每个时间段的归属与时长。
+
+![今日时间线](docs/screenshots/today-timeline.png)
+
+### 项目主页
+
+以项目目录管理工作内容，集中查看项目累计时间、项目说明和最近记录。
+
+![项目主页](docs/screenshots/project-overview.png)
+
+### 时间统计
+
+按日期和项目筛选时间分布，快速了解时间投入。
+
+![时间统计](docs/screenshots/statistics.png)
+
+## 从源码构建（开发者可选）
+
+如果你希望研究或复现该项目，需要 Node.js 22.5+ 与 pnpm：
 
 ```bash
 corepack enable
 pnpm install
-pnpm run build
-pnpm start
-```
-
-打开 `http://127.0.0.1:3001`。第一次启动会创建 `data/baiwanquan.sqlite`；该目录已被 Git 忽略。
-
-开发时分别启动两个终端：
-
-```bash
-pnpm run api
-pnpm run dev
-```
-
-Vite 会把 `/api` 请求代理到本地 API 服务。
-
-## 桌面开发模式
-
-开发桌面版时使用：
-
-```bash
-pnpm run desktop:dev
-```
-
-该命令会启动隔离的本地 API（端口 3101）、Vite 热更新服务和 Electron 窗口。代码保存后页面会自动刷新；关闭开发窗口会停止相关进程。开发记录保存到 `data-dev/`，不会影响安装版或普通开发模式的 `data/`。
-
-确认改动后，构建安装包：
-
-```bash
 pnpm run build:desktop
 ```
 
-## 验证
+构建完成后，Windows 安装包将生成在 `release/` 目录。开发数据、构建缓存和依赖目录均不会提交到 Git 仓库。
 
-```bash
-pnpm test
-pnpm run build
-```
+## 技术栈
 
-测试使用系统临时目录中的数据库，不会读取或修改 `data/` 中的用户数据。
-
-## 数据与备份
-
-- 查看服务健康状态：`GET /api/v1/health`
-- 导出完整可移植 JSON：`GET /api/v1/export`
-- 导入 JSON 备份：`POST /api/v1/import`，请求体必须显式包含 `{ "replace": true, "data": ... }`；会替换当前本地数据。
-- 默认数据库位置：`data/baiwanquan.sqlite`
-
-关闭应用后复制该 SQLite 文件即可完成离线备份。生产环境不要将数据库文件放在云盘的实时同步目录，以避免多个进程同时写入。
-
-## API 概览
-
-| 资源 | 支持操作 |
-| --- | --- |
-| 项目 | 查询、创建、改名/改说明、归档、恢复 |
-| 时间段 | 按时间/项目查询、创建、编辑、软删除 |
-| 统计 | 基于真实时间段按日期聚合 |
-| 计时器 | 查询、保存秒表或倒计时状态 |
-| 设置 | 查询、保存本地偏好 |
-| 导出 | 读取完整 JSON 备份 |
-
-详细的数据规则与端点契约见 [docs/architecture.md](docs/architecture.md)。
-
-## 发布到 GitHub
-
-提交前，先确认数据库、构建产物和本地缓存没有被加入版本控制：本项目的 `.gitignore` 已排除这些内容。然后在项目根目录执行：
-
-```bash
-git init
-git add .
-git commit -m "feat: initial public release"
-git branch -M main
-git remote add origin https://github.com/<你的用户名>/<仓库名>.git
-git push -u origin main
-```
-
-先在 GitHub 创建一个**空仓库**（不要勾选 README、`.gitignore` 或 License），再把上述地址替换到 `git remote add origin`。首次推送时 GitHub 会要求在浏览器登录或使用 Personal Access Token；不再使用账户密码。
-
-面试展示建议在仓库首页放三张界面截图、写清本地优先架构和关键数据规则，并通过 GitHub Releases 上传 `release/` 中的安装包；安装包不要直接提交进 Git 仓库。
+Electron 38 · Vite · JavaScript · Node.js · SQLite · NSIS

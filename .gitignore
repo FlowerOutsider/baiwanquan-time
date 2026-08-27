@@ -15,3 +15,8 @@ tools/node-v*-win-x64/
 current-page.png
 play-state.png
 System.Management.Automation.Internal.Host.InternalHost
+/启动桌面开发模式.cmd
+/.env.example
+/docs/architecture.md
+/scripts/generate-icon.mjs
+/tools/*.ps1
